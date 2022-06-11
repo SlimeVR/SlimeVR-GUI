@@ -9,7 +9,7 @@ This project is written in Typescript and using Tauri as the backend. Tauri is w
 
 - Node 16 (We recommend the use of nvm instead of installing node directly)
 - Windows Webview
-- Slimevr server installed
+- SlimeVR server installed
 
 # Install
 
