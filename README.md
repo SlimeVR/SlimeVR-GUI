@@ -1,15 +1,15 @@
 # SlimeVR UI
 
 
-This is the gui of slimevr, it uses the solarxr protocol to comunicate with the server and is completely isolated from the server logic
+This is the GUI of SlimeVR, it uses the SolarXR protocol to communicate with the server and is completely isolated from the server logic.
 
 This project is written in Typescript and using Tauri as the backend. Tauri is written in Rust.
 
 ## Prerequisites
 
-- Node 16 (We recommend the use of nvm instead of installing node directly)
+- Node.js 16 (We recommend the use of `nvm` instead of installing Node.js directly)
 - Windows Webview
-- Slimevr server installed
+- SlimeVR server installed
 
 ## Compiling
 
