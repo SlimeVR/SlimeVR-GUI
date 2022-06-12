@@ -5,36 +5,42 @@ This is the gui of slimevr, it uses the solarxr protocol to comunicate with the 
 
 This project is written in Typescript and using Tauri as the backend. Tauri is written in Rust.
 
-# Prerequisites
+## Prerequisites
 
 - Node 16 (We recommend the use of nvm instead of installing node directly)
 - Windows Webview
 - Slimevr server installed
 
-# Install
+## Compiling
 
 ```
 npm install
 ```
-
-# Launch in dev mode
-
+ Build for production
+```
+npm run tauri build
+```
+Launch in dev mode
 ```
 npm run tauri dev
 ```
 
-# Contributions
+## Contributing
 By contributing to this project you are placing all your code under MIT or less restricting licenses, and you certify that the code you have used is compatible with those licenses or is authored by you. If you're doing so on your work time, you certify that your employer is okay with this.
 
-For a how-to on contributing, see [CONTRIBUTING.md](CONTRIBUTING.md).
+## License
+All code in this repository is dual-licensed under either:
 
-# License Clarification
+- MIT License ([LICENSE-MIT](docs/LICENSE-MIT))
+- Apache License, Version 2.0 ([LICENSE-APACHE](docs/LICENSE-APACHE))
 
-**SlimeVR software** (including server, firmware, drivers, installator, documents, and others - see licence for each case specifically) **is distributed under the [MIT License](https://github.com/SlimeVR/SlimeVR-Server/blob/main/LICENSE) and is copyright of Eiren Rain and SlimeVR.** The MIT Licence is a permissive license giving you rights to modify and distribute the software with little strings attached.
+at your option. This means you can select the license you prefer!
 
-**However, the MIT License has some limits, and if you wish to distribute software based on SlimeVR, you need to be aware of them:**
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
 
-* When distributing any software that uses or is based on SlimeVR, you have to provide to the end-user the original, unmodified `LICENSE` file from SlimeVR. This file is located [here](LICENSE.md). This includes the `Copyright (c) 2021 Eiren Rain, SlimeVR` part of the license. It is not sufficient to use a generic MIT License, it must be the original license file.
+### Complying with the license
+Please note that these licenses are very permissive, but if you wish to distribute software based on this code, you need to be aware of the following limits of these licenses:
+* When distributing any software that uses or is based on SlimeVR, you have to provide to the end-user the original, unmodified `LICENSE-MIT` or `LICENSE-APACHE` file (or both) from SlimeVR. This includes the `Copyright (c) 2022 SlimeVR Contributors` part of the license. It is not sufficient to use a generic MIT/Apache License, it must be the original license file.
 * This applies even if you distribute software without the source code. In this case, one way to provide it to the end-user is to have a menu in your application that lists all the open source licenses used, including SlimeVR's.
 
-Please refer to the [LICENSE](LICENSE.md) file if you are at any point uncertain what the exact the requirements are.
+Please refer to the original license files if you are at any point uncertain what the exact the requirements are.
