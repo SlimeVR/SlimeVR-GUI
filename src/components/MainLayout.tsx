@@ -18,10 +18,10 @@ export function MainLayoutRoute({ children }: { children: ReactChild }) {
           <div className="flex h-full pb-4">
             <Navbar></Navbar>
             <div className="flex gap-3 mr-4 w-full">
-              <div className="flex flex-grow gap-10 flex-col rounded-xl bg-background-40">
+              <div className="flex flex-grow gap-10 flex-col rounded-xl bg-background-70">
                 {children}
               </div>
-              <div className="flex flex-col px-4 w-[274px] gap-3 pt-5 rounded-xl overflow-y-auto bg-background-40">
+              <div className="flex flex-col px-4 w-[274px] gap-3 pt-5 rounded-xl overflow-y-auto bg-background-70">
                 <div className='flex'>
                   <ResetButton type={ResetType.Quick}></ResetButton>
                 </div>

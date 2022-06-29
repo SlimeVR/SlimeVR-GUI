@@ -38,7 +38,6 @@ export function useProvideWebsocketApi(): WebSocketApi {
 
     const onConnected = (event: Event) => {
         if (!webSocketRef.current) return ;
-
         setConnected(true);
     }
 
@@ -91,7 +90,7 @@ export function useProvideWebsocketApi(): WebSocketApi {
     const sendDataFeedPacket = (type: DataFeedMessage, data: DataFeedPacketType): void => {
         if (!webSocketRef.current)
             throw new Error('No connection');
-
+        console.log('packet ?')
         const fbb = new Builder(1);
 
         const message = new MessageBundleT();
@@ -109,7 +108,6 @@ export function useProvideWebsocketApi(): WebSocketApi {
     const connect = () =>  {
         webSocketRef.current = new WebSocket('ws://localhost:21110');
         
-
         // Connection opened
         webSocketRef.current.addEventListener('open', onConnected);
         webSocketRef.current.addEventListener('close', onConnectionClose);
@@ -129,33 +127,31 @@ export function useProvideWebsocketApi(): WebSocketApi {
         return () => {
             disconnect();
         }
-    })
+    }, [])
 
     return {
         isConnected,
         useDataFeedPacket: <T>(type: DataFeedMessage, callback: (packet: T) => void) => {
-            const onEvent = (event: CustomEventInit) => {
-                callback(event.detail)
-            }
-
             useEffect(() => {
+                const onEvent = (event: CustomEventInit) => {
+                    callback(event.detail)
+                }
                 datafeedlistenerRef.current.addEventListener(DataFeedMessage[type], onEvent)
                 return () => {
                     datafeedlistenerRef.current.removeEventListener(DataFeedMessage[type], onEvent)
                 }
-            })
+            }, [callback, type])
         },
         useRPCPacket: <T>(type: RpcMessage, callback: (packet: T) => void) => {
-            const onEvent = (event: CustomEventInit) => {
-                callback(event.detail)
-            }
-
             useEffect(() => {
+                const onEvent = (event: CustomEventInit) => {
+                    callback(event.detail)
+                }
                 rpclistenerRef.current.addEventListener(RpcMessage[type], onEvent)
                 return () => {
                     rpclistenerRef.current.removeEventListener(RpcMessage[type], onEvent)
                 }
-            })
+            }, [callback, type])
         },
         sendRPCPacket,
         sendDataFeedPacket

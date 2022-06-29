@@ -16,7 +16,7 @@ export function SettingsLayoutRoute({ children }: { children: ReactChild }) {
         <div ref={ref} className='flex-grow' style={{ height: layoutHeight }}>
           <div className="flex h-full pb-4">
             <Navbar></Navbar>
-            <div className="bg-background-40 flex h-full w-full rounded-xl mr-4">
+            <div className="bg-background-70 flex h-full w-full rounded-xl mr-4">
               <SettingsSidebar></SettingsSidebar>
               <div className="flex flex-grow gap-10 flex-col overflow-hidden ">
                   <div className="relative overflow-y-auto overflow-x-hidden">

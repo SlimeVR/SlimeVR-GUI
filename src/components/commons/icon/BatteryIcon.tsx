@@ -6,9 +6,9 @@ export function BatteryIcon({ value }: { value: number }) {
     const col = useMemo(() => {
 
         const colorsMap: { [key: number]: string } = {
-            0.4: 'fill-status-online',
+            0.4: 'fill-status-success',
             0.2: 'fill-status-warning',
-            0: 'fill-status-error',
+            0: 'fill-status-critical',
         }
 
         const val = Object.keys(colorsMap).filter(key => +key < value).sort((a, b) => +b - +a)[0];

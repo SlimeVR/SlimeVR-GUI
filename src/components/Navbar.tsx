@@ -14,7 +14,7 @@ export function NavButton({ to, children, match, icon }: { to: string, children:
     });
 
     return (
-        <NavLink to={to} className={classnames("flex flex-col justify-center gap-4 w-[75px] h-[75px] rounded-md group select-text text-emphasised", { 'bg-accent-background-10': doesMatch, 'hover:bg-background-30': !doesMatch })}>
+        <NavLink to={to} className={classnames("flex flex-col justify-center gap-4 w-[75px] h-[75px] rounded-md group select-text text-emphasised", { 'bg-accent-background-50 fill-accent-background-20': doesMatch, 'hover:bg-background-70': !doesMatch })}>
             <div className="flex justify-around">
                 <div className={classnames("scale-150", { 'fill-accent-lighter': doesMatch, 'fill-background-50': !doesMatch })}>{icon}</div>
             </div>

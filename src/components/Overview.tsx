@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BodyPart, DataFeedMessage, DataFeedUpdateT, DeviceDataT, TrackerDataT } from "solarxr-protocol";
 import { useAppContext } from "../hooks/app";
 import { useWebsocketAPI } from "../hooks/websocket-api";
@@ -14,7 +14,8 @@ interface FlatDeviceTracker {
 export function Overview() {
     const { state } = useAppContext();
 
-    const trackers = useMemo(() => (state.datafeed?.devices || []).reduce<FlatDeviceTracker[]>((curr, device) => ([...curr, ...device.trackers.map((tracker) => ({ tracker, device }))]), []), [state.datafeed]);
+
+    const trackers = useMemo(() => (state.datafeed?.devices || []).reduce<FlatDeviceTracker[]>((curr, device) => ([...curr, ...device.trackers.map((tracker) => ({ tracker, device }))]), []), [state]);
     
     const asignedTrackers = useMemo(() => 
         trackers.filter(({ tracker: { info } }) => {

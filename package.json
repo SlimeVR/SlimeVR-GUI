@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
-    "@fontsource/work-sans": "^4.5.7",
+    "@fontsource/poppins": "^4.5.8",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^6.2.1",
     "@tauri-apps/api": "^1.0.0-rc.3",

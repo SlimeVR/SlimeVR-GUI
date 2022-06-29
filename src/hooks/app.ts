@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReducerAction, ReducerWithoutAction, useContext, useEffect, useReducer } from "react";
+import { createContext, Dispatch, useContext, useEffect, useReducer } from "react";
 import { DataFeedConfigT, DataFeedMessage, DataFeedUpdateT, DeviceDataMaskT, StartDataFeedT, TrackerDataMaskT } from "solarxr-protocol";
 import { useWebsocketAPI } from "./websocket-api";
 
@@ -55,6 +55,7 @@ export function useProvideAppContext(): AppContext {
         }
     }, [isConnected])
 
+
     useDataFeedPacket(DataFeedMessage.DataFeedUpdate, (packet: DataFeedUpdateT) => {
         dispatch({ type: 'datafeed', value: packet })
     })
@@ -65,9 +66,6 @@ export function useProvideAppContext(): AppContext {
         dispatch,
     }
 }
-
-
-
 
 export const AppContextC = createContext<AppContext>(undefined as any);
 

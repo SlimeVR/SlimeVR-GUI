@@ -18,9 +18,9 @@ const statusLabel = {
     [TrackerStatus.OK]: 'Connected',
 }
 
-function TrackerBig({ device, tracker, trackerName, statusClass, velocity }: { tracker: TrackerDataT, device?: DeviceDataT, trackerName: string | Uint8Array, statusClass: string, velocity: number}) {
+function TrackerBig({ device, tracker, trackerName, statusClass }: { tracker: TrackerDataT, device?: DeviceDataT, trackerName: string | Uint8Array, statusClass: string}) {
     return (
-        <div className="flex flex-col justify-center rounded-md py-3 pr-4 pl-4 w-full gap-2 bg-purple-gray-700 bg-background-30 box-border my-8 px-6 h-52" style={{'boxShadow': `0px 0px ${velocity * 15}px ${velocity * 15}px #183951`, }}>
+        <div className="flex flex-col justify-center rounded-md py-3 pr-4 pl-4 w-full gap-2 box-border my-8 px-6 h-52">
         <div className="flex justify-center">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="28" height="28" rx="2" fill="#56407B"/>
@@ -69,9 +69,9 @@ function TrackerBig({ device, tracker, trackerName, statusClass, velocity }: { t
     )
 }
 
-function TrackerSmol({ device, tracker, trackerName, statusClass, velocity }: { tracker: TrackerDataT, device?: DeviceDataT, trackerName: string | Uint8Array, statusClass: string, velocity: number}) {
+function TrackerSmol({ device, tracker, trackerName, statusClass }: { tracker: TrackerDataT, device?: DeviceDataT, trackerName: string | Uint8Array, statusClass: string}) {
     return (
-        <div className="flex flex-col justify-center rounded-md py-3 pr-4 pl-4 w-full gap-2 bg-purple-gray-700 bg-background-30 box-border my-8 px-6 h-52" style={{'boxShadow': `0px 0px ${velocity * 15}px ${velocity * 15}px #183951`, }}>
+        <div className="flex flex-col justify-center rounded-md py-3 pr-4 pl-4 w-full gap-2 box-border my-8 px-6 h-52">
         </div>
     )
 }
@@ -84,12 +84,12 @@ export function TrackerCard({ tracker, device, smol = false }:  { tracker: Track
 
     const statusClass = useMemo(() => {
         const statusMap: { [key: number]: string } = {
-            [TrackerStatus.NONE]: 'bg-background-20',
+            [TrackerStatus.NONE]: 'bg-background-80',
             [TrackerStatus.BUSY]: 'bg-status-warning',
-            [TrackerStatus.ERROR]: 'bg-status-error',
-            [TrackerStatus.DISCONNECTED]: 'bg-background-20',
+            [TrackerStatus.ERROR]: 'bg-status-critical',
+            [TrackerStatus.DISCONNECTED]: 'bg-background-80',
             [TrackerStatus.OCCLUDED]: 'bg-status-warning',
-            [TrackerStatus.OK]: 'bg-status-online'
+            [TrackerStatus.OK]: 'bg-status-success'
         }
         return statusMap[tracker.status];
     }, [tracker.status]);
@@ -120,10 +120,10 @@ export function TrackerCard({ tracker, device, smol = false }:  { tracker: Track
 
     return (
         <TrackerSettings tracker={tracker} device={device} >
-            <>
-                {smol && <TrackerBig tracker={tracker} device={device} trackerName={trackerName} statusClass={statusClass} velocity={velocity}></TrackerBig>}
-                {!smol && <TrackerSmol tracker={tracker} device={device} trackerName={trackerName} statusClass={statusClass} velocity={velocity}></TrackerSmol>}
-            </>
+            <div className="bg-background-60"  style={{'boxShadow': `0px 0px ${velocity * 15}px ${velocity * 15}px #183951` }}>
+                {smol && <TrackerSmol tracker={tracker} device={device} trackerName={trackerName} statusClass={statusClass}></TrackerSmol>}
+                {!smol && <TrackerBig tracker={tracker} device={device} trackerName={trackerName} statusClass={statusClass}></TrackerBig>}
+            </div>
         </TrackerSettings>
     )
 
