@@ -93,7 +93,7 @@ function App() {
       <WebSocketApiContext.Provider value={websocketAPI}>
         <AppContextProvider>
           <Router>
-            <div className='h-full w-full text-standard bg-background-80'>
+            <div className='h-full w-full text-standard bg-background-80 text-background-10'>
               <div className='flex-col h-full'>
                 {!websocketAPI.isConnected && (
                   <>

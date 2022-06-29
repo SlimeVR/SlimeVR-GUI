@@ -2,6 +2,7 @@ import { ReactChild } from "react";
 import ReactModal from "react-modal";
 import { IconButton } from "./commons/ButtonIcon";
 import { CrossIcon } from "./commons/icon/CrossIcon";
+import { Typography } from "./commons/Typography";
 
 export function AppModal({ children, name, ...props }: { children?: ReactChild, name: ReactChild } & ReactModal.Props) {
 
@@ -12,9 +13,7 @@ export function AppModal({ children, name, ...props }: { children?: ReactChild, 
             className="items-center w-full max-w-2xl h-full md:h-auto bg-purple-gray-700 relative rounded-lg shadow-lg border-none "
         >
             <div className="flex justify-between items-start p-5 rounded-t border-b-2 border-primary-1">
-                <h3 className="text-extra-emphasised">
-                    {name}
-                </h3>
+                <Typography variant="section-title">{name}</Typography>
                 <div className="flex">
                     <IconButton icon={<CrossIcon></CrossIcon>} className="fill-purple-gray-200" onClick={props.onRequestClose}></IconButton>
                 </div>

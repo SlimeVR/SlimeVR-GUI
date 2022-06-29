@@ -97,11 +97,11 @@ export function TrackersSettings() {
                     <p>Useful if you want more control over what SlimeVR does.</p>
                 </div>
                 <div className="grid grid-cols-2  gap-5 pt-5">
-                    <CheckBox outlined {...register('trackers.waist')} label="Waist" />
-                    <CheckBox outlined {...register('trackers.chest')} label="Chest"/>
-                    <CheckBox outlined {...register('trackers.legs')} label="Legs"/>
-                    <CheckBox outlined {...register('trackers.knees')} label="Knees"/>
-                    <CheckBox outlined {...register('trackers.elbows')} label="Elbows"/>
+                    <CheckBox {...register('trackers.waist')} label="Waist" />
+                    <CheckBox {...register('trackers.chest')} label="Chest"/>
+                    <CheckBox {...register('trackers.legs')} label="Legs"/>
+                    <CheckBox {...register('trackers.knees')} label="Knees"/>
+                    <CheckBox {...register('trackers.elbows')} label="Elbows"/>
                 </div>
             </div>
             <div className="flex flex-col gap-2" id="filtering">

@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import { Control, Controller } from "react-hook-form";
 import { Button } from "./Button";
+import { CubeIcon } from "./icon/CubeIcon";
 
 
 
@@ -10,14 +11,14 @@ export function NumberSelector({ label, valueLabelFormat, control, name, min, ma
     const variantClass = useMemo(() => {
         const variantsMap = {
             smol: {
-                container: 'flex flex-col gap-1',
-                label: 'flex text-field-title',
-                value: 'flex justify-center items-center w-10 text-field-title'
+                container: classNames('flex flex-col gap-1'),
+                label: classNames('flex text-field-title'),
+                value: classNames('flex justify-center items-center w-10 text-field-title')
             },
             big: {
-                container: 'flex flex-row gap-5',
-                label: 'flex flex-grow justify-start items-center text-field-title',
-                value: 'flex justify-center items-center w-16 text-field-title'
+                container: classNames('flex flex-row gap-5'),
+                label: classNames('flex flex-grow justify-start items-center text-field-title'),
+                value: classNames('flex justify-center items-center w-16 text-field-title')
             }
         };
         return variantsMap[variant];

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Button } from "../../commons/Button";
 import { SlimeVRIcon } from "../../commons/icon/SimevrIcon";
+import { Typography } from "../../commons/Typography";
 
 
 
@@ -9,13 +10,15 @@ export function HomePage() {
     return (
         <div className="flex flex-col gap-5 h-full items-center w-full justify-center">
             <SlimeVRIcon></SlimeVRIcon>
-            <div className="text-lg">Welcome to SlimeVR</div>
+            <Typography variant="main-title">Welcome to SlimeVR</Typography>
             <div className="flex flex-col items-center">
-                <p className="text-sm">Bringing full-body tracking</p>
-                <p className="text-sm">to everyone</p>
+                <Typography color="secondary">Bringing full-body tracking</Typography>
+                <Typography color="secondary">to everyone</Typography>
             </div>
             <Button variant="primary" to="/onboarding/wifi-creds">Lets get setup!</Button>
-            <NavLink to="/">Skip setup</NavLink>
+            <NavLink to="/">
+                <Typography color="secondary">Skip setup</Typography>
+            </NavLink>
         </div>
     )
 }

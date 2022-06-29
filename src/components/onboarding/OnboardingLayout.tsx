@@ -10,7 +10,7 @@ export function OnboardingLayout({ children }: { children: ReactChild }) {
     return (
       <>
         <TopBar progress={1}></TopBar>
-        <div ref={ref} className='flex-grow pt-10' style={{ height: layoutHeight }}>
+        <div ref={ref} className='flex-grow pt-10 mx-4' style={{ height: layoutHeight }}>
           {children}
         </div>
       </>

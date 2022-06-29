@@ -1,16 +1,47 @@
-import { forwardRef, HTMLInputTypeAttribute } from "react";
+import classNames from "classnames";
+import { forwardRef, HTMLInputTypeAttribute, MouseEvent, useState } from "react";
+import { EyeIcon } from "./icon/EyeIcon";
 
 export interface InputProps {
     type: HTMLInputTypeAttribute,
     placeholder?: string
+    label?: string;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({type, placeholder, ...props}, ref) => {
-    return <input 
-        type={type} 
-        ref={ref} 
-        className="rounded-lg bg-purple-gray-500 border-purple-gray-500 focus:border-purple-gray-500 placeholder:text-purple-gray-300 text-field-title" 
-        placeholder={placeholder}
-        {...props} 
-    />;
+export const Input = forwardRef<HTMLInputElement, InputProps>(({type, placeholder, label, ...props}, ref) => {
+    const [forceText, setForceText] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const togglePassword = (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setForceText(passwordVisible)
+        setPasswordVisible(!passwordVisible);
+    }
+
+
+    return (
+        <label className="flex flex-col gap-1">
+            {label}
+            <div className="relative w-full">
+                <input 
+                    type={forceText ? 'text' : type} 
+                    ref={ref} 
+                    className={
+                        classNames(
+                            "w-full focus:ring-transparent focus:ring-offset-transparent focus:outline-transparent rounded-md bg-background-60 border-background-60 focus:border-accent-background-40 placeholder:text-background-30 text-standard relative", 
+                            { 'pr-10': type === 'password' }
+                        )
+                    }
+                    placeholder={placeholder}
+                    {...props} 
+                >
+                </input>
+                {type === 'password' && 
+                    <div className="fill-background-10 absolute top-0 h-full flex flex-col justify-center right-0 p-4" onClick={togglePassword}>
+                        <EyeIcon></EyeIcon>
+                    </div>
+                }
+            </div>
+        </label>
+    );
 });

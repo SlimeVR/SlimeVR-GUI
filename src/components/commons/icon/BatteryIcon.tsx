@@ -12,7 +12,7 @@ export function BatteryIcon({ value }: { value: number }) {
         }
 
         const val = Object.keys(colorsMap).filter(key => +key < value).sort((a, b) => +b - +a)[0];
-        return colorsMap[+val] || 'fill-primary-gray-600';
+        return colorsMap[+val] || 'fill-background-10';
     }, [value])
     
     return (

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { ArrowLink } from "../../commons/ArrowLink";
 import { Button } from "../../commons/Button";
 
 
@@ -10,8 +11,8 @@ export function ConnectTrackersPage() {
             <div className="flex flex-col w-full h-full justify-center items-center">
                 <div className="flex gap-10 h-full ">
                     <div className="flex flex-col max-w-sm gap-3">
-                        <NavLink to="/onboarding/home">Go Back to WiFi credentials</NavLink>
-                        <div className="text-xl">Input WiFi credentials</div>
+                        <ArrowLink to="/onboarding/home">Go Back to WiFi credentials</ArrowLink>
+                        <div className="text-main-title">Input WiFi credentials</div>
                         <p>The Trackers will use these credentials to connect wirelessly</p>
                         <p>please use the credentials that you are currently connected to</p>
                     </div>
@@ -20,7 +21,7 @@ export function ConnectTrackersPage() {
                     </div>
                 </div>
             </div>
-            <div className="w-full p-4 flex flex-row">
+            <div className="w-full py-4 flex flex-row">
                 <div className="flex flex-grow">
                     <Button variant="primary" to="/">Skip setup</Button>
                 </div>
