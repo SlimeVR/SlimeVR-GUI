@@ -129,7 +129,7 @@ export function useProvideWebsocketApi(): WebSocketApi {
         return () => {
             disconnect();
         }
-    }, [])
+    })
 
     return {
         isConnected,
@@ -143,7 +143,7 @@ export function useProvideWebsocketApi(): WebSocketApi {
                 return () => {
                     datafeedlistenerRef.current.removeEventListener(DataFeedMessage[type], onEvent)
                 }
-            }, [])
+            })
         },
         useRPCPacket: <T>(type: RpcMessage, callback: (packet: T) => void) => {
             const onEvent = (event: CustomEventInit) => {
@@ -155,7 +155,7 @@ export function useProvideWebsocketApi(): WebSocketApi {
                 return () => {
                     rpclistenerRef.current.removeEventListener(RpcMessage[type], onEvent)
                 }
-            }, [])
+            })
         },
         sendRPCPacket,
         sendDataFeedPacket

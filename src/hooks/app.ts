@@ -1,42 +1,68 @@
-import { createContext, Dispatch, useContext, useReducer } from "react";
+import { createContext, Dispatch, ReducerAction, ReducerWithoutAction, useContext, useEffect, useReducer } from "react";
+import { DataFeedConfigT, DataFeedMessage, DataFeedUpdateT, DeviceDataMaskT, StartDataFeedT, TrackerDataMaskT } from "solarxr-protocol";
+import { useWebsocketAPI } from "./websocket-api";
 
 type AppStateAction =
- | { type: 'debug', value: boolean }
-
-
+ | { type: 'datafeed', value: DataFeedUpdateT }
 
 export interface AppState {
-    debug: boolean;
+    datafeed: DataFeedUpdateT
 }
 
 
 export interface AppContext {
     state: AppState;
     dispatch: Dispatch<AppStateAction>;
-    setDebug: (value: boolean) => void;
 }
 
 
 export function reducer(state: AppState, action: AppStateAction) {
     switch (action.type) {
-        case 'debug':
-            return { ...state, debug: action.value };
+        case 'datafeed':
+            return { ...state, datafeed: action.value };
         default:
-            throw new Error(`unhandled state action ${action.type}`);
+            throw new Error(`unhandled state action ${(action as any).type}`);
     }
 }
 
 
 
 export function useProvideAppContext(): AppContext {
+    const { sendDataFeedPacket, useDataFeedPacket, isConnected } = useWebsocketAPI();
+    const [state, dispatch] = useReducer(reducer, { datafeed: new DataFeedUpdateT() })
 
-    const [state, dispatch] = useReducer(reducer, { debug: false })
+    useEffect(() => {
+        if (isConnected) {
+            const trackerData = new TrackerDataMaskT();
+            trackerData.position = true;
+            trackerData.rotation = true;
+            trackerData.info = true;
+            trackerData.status = true;
+            trackerData.temp = true;
+        
+            const dataMask = new DeviceDataMaskT();
+            dataMask.deviceData = true;
+            dataMask.trackerData = trackerData;
+        
+            const config = new DataFeedConfigT();
+            config.dataMask = dataMask;
+            config.minimumTimeSinceLast = 100;
+            config.syntheticTrackersMask = trackerData
+        
+            const startDataFeed = new StartDataFeedT()
+            startDataFeed.dataFeeds = [config]
+            sendDataFeedPacket(DataFeedMessage.StartDataFeed, startDataFeed);
+        }
+    }, [isConnected])
+
+    useDataFeedPacket(DataFeedMessage.DataFeedUpdate, (packet: DataFeedUpdateT) => {
+        dispatch({ type: 'datafeed', value: packet })
+    })
 
 
     return {
         state,
         dispatch,
-        setDebug: (value: boolean) => dispatch({ type: 'debug', value }),
     }
 }
 

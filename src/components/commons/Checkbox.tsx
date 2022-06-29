@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { forwardRef, useId } from 'react'
+import { forwardRef, ReactChild, useId } from 'react'
 
-export const CheckBox = forwardRef<HTMLInputElement, { label: string, outlined?: boolean }>(({ label, outlined, ...props }, ref) => {
+export const CheckBox = forwardRef<HTMLInputElement, { label: string | ReactChild, outlined?: boolean }>(({ label, outlined, ...props }, ref) => {
     const id = useId();
 
     return (

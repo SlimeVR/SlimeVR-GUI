@@ -24,7 +24,7 @@ export function useLayout<T extends HTMLElement>() {
       return () => {
         window.removeEventListener('resize', onWindowResize);
       }
-    }, [])
+    })
 
 
     return {

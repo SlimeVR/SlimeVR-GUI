@@ -1,4 +1,4 @@
-import { useProvideWebsocketApi, useWebsocketAPI, WebSocketApiContext } from './hooks/websocket-api';
+import { useProvideWebsocketApi, WebSocketApiContext } from './hooks/websocket-api';
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,43 +9,21 @@ import { Overview } from './components/Overview';
 import { BodyProportions } from './components/proportions/BodyProportions';
 import { AppContextProvider } from './components/providers/AppContext';
 import { useEffect } from 'react';
-import { DataFeedConfigT, DataFeedMessage, DeviceDataMaskT, StartDataFeedT, TrackerDataMaskT } from 'solarxr-protocol';
 import { MainLayoutRoute } from './components/MainLayout';
 import { SettingsLayoutRoute } from './components/settings/SettingsLayout';
 import { TrackersSettings } from './components/settings/pages/TrackersSettings';
-import { Navbar } from './components/Navbar';
 import { Serial } from './components/settings/pages/Serial';
 
 import { listen } from '@tauri-apps/api/event'
 import type { Event } from '@tauri-apps/api/event'
-import { appWindow } from '@tauri-apps/api/window'
+import { TopBar } from './components/TopBar';
+import { ConfigContextProvider } from './components/providers/ConfigContext';
+import { OnboardingLayout } from './components/onboarding/OnboardingLayout';
+import { HomePage } from './components/onboarding/pages/Home';
+import { WifiCredsPage } from './components/onboarding/pages/WifiCreds';
+import { ConnectTrackersPage } from './components/onboarding/pages/ConnectTracker';
 
 function Layout() {
-  const { sendDataFeedPacket } = useWebsocketAPI();
-
-  useEffect(() => {
-    const trackerData = new TrackerDataMaskT();
-    trackerData.position = true;
-    trackerData.rotation = true;
-    trackerData.info = true;
-    trackerData.status = true;
-    trackerData.temp = true;
-
-    const dataMask = new DeviceDataMaskT();
-    dataMask.deviceData = true;
-    dataMask.trackerData = trackerData;
-
-    const config = new DataFeedConfigT();
-    config.dataMask = dataMask;
-    config.minimumTimeSinceLast = 100;
-    config.syntheticTrackersMask = trackerData
-
-    const startDataFeed = new StartDataFeedT()
-    startDataFeed.dataFeeds = [config]
-    sendDataFeedPacket(DataFeedMessage.StartDataFeed, startDataFeed);
-  }, [])
-  
-
   return (
     <>
       <Routes>
@@ -67,7 +45,16 @@ function Layout() {
           <Route path="trackers" element={<TrackersSettings />} />
           <Route path="serial" element={<Serial />} />
         </Route>
-        <Route path="*" element={<Navbar></Navbar>}></Route>
+        <Route path="/onboarding" element={
+            <OnboardingLayout>
+              <Outlet></Outlet>
+            </OnboardingLayout>
+        }>
+          <Route path="home" element={<HomePage />} />
+          <Route path="wifi-creds" element={<WifiCredsPage />} />
+          <Route path="connect-trackers" element={<ConnectTrackersPage />} />
+        </Route>
+        <Route path="*" element={<TopBar></TopBar>}></Route>
       </Routes>
     </>
   )
@@ -94,46 +81,33 @@ function App() {
       } else if (event_type === "other") {
         console.log("Other process event: %s", s);
       }
-      return async () => {
-        await unlisten
-      }
+      
     });
-  }, [])
-
-  const updateCorners = () => {
-    // Check if the window is maximized to remove rounded corners
-    const body = document.getElementsByTagName('body');
-    if (!body) return;
-    appWindow.isMaximized().then((maximized) => {
-      body[0].style.borderRadius = maximized ? '0' : `15px`;
-    })
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', updateCorners);
     return () => {
-      window.removeEventListener('resize', updateCorners)
+      unlisten.then(() => {});
     }
   }, [])
 
   return (
-    <WebSocketApiContext.Provider value={websocketAPI}>
-      <AppContextProvider>
-        <Router>
-          <div className='h-full w-full text-default bg-purple-gray-900 '>
-            <div className='flex-col h-full'>
-              {!websocketAPI.isConnected && (
-                <>
-                  <Navbar></Navbar>
-                  <div className='flex w-full h-full justify-center items-center p-2'>Connection lost to server</div>
-                </>
-              )}
-              {websocketAPI.isConnected && <Layout></Layout>}
+    <ConfigContextProvider>
+      <WebSocketApiContext.Provider value={websocketAPI}>
+        <AppContextProvider>
+          <Router>
+            <div className='h-full w-full text-default bg-background-20'>
+              <div className='flex-col h-full'>
+                {!websocketAPI.isConnected && (
+                  <>
+                    <TopBar></TopBar>
+                    <div className='flex w-full h-full justify-center items-center p-2'>Connection lost to server</div>
+                  </>
+                )}
+                {websocketAPI.isConnected && <Layout></Layout>}
+              </div>
             </div>
-          </div>
-        </Router>
-      </AppContextProvider>
-    </WebSocketApiContext.Provider>
+          </Router>
+        </AppContextProvider>
+      </WebSocketApiContext.Provider>
+    </ConfigContextProvider>
   );
 }
 
