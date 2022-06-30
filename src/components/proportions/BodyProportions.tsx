@@ -185,7 +185,6 @@ export function BodyProportions() {
                 })}
               >
                 <NumberSelector
-                  variant="big"
                   control={control}
                   label={label}
                   min={-1}

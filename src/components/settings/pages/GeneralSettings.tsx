@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import {
   ChangeSettingsRequestT,
   FilteringSettingsT,
+  FilteringType,
   RpcMessage,
   SettingsRequestT,
   SettingsResponseT,
@@ -12,7 +13,11 @@ import {
 import { useConfig } from '../../../hooks/config';
 import { useWebsocketAPI } from '../../../hooks/websocket-api';
 import { CheckBox } from '../../commons/Checkbox';
+import { SquaresIcon } from '../../commons/icon/SquaresIcon';
+import { SteamIcon } from '../../commons/icon/SteamIcon';
+import { WrenchIcon } from '../../commons/icon/WrenchIcons';
 import { NumberSelector } from '../../commons/NumberSelector';
+import { Radio } from '../../commons/Radio';
 import { Select } from '../../commons/Select';
 import { Typography } from '../../commons/Typography';
 import { SettingsPageLayout } from '../SettingsPageLayout';
@@ -115,11 +120,11 @@ export function GeneralSettings() {
 
   return (
     <form className="flex flex-col gap-3" ref={pageRef}>
-      <SettingsPageLayout id="steamvr">
+      <SettingsPageLayout icon={<SteamIcon></SteamIcon>} id="steamvr">
         <>
           <Typography variant="main-title">SteamVR</Typography>
-          <Typography>SteamVR trackers</Typography>
-          <div className="flex flex-col">
+          <Typography bold>SteamVR trackers</Typography>
+          <div className="flex flex-col py-2">
             <Typography color="secondary">
               Enable or disable specific tracking parts.
             </Typography>
@@ -166,11 +171,11 @@ export function GeneralSettings() {
           </div>
         </>
       </SettingsPageLayout>
-      <SettingsPageLayout id="mechanics">
+      <SettingsPageLayout icon={<WrenchIcon></WrenchIcon>} id="mechanics">
         <>
           <Typography variant="main-title">Tracker mechanics</Typography>
-          <Typography>Filtering</Typography>
-          <div className="flex flex-col">
+          <Typography bold>Filtering</Typography>
+          <div className="flex flex-col pt-2 pb-4">
             <Typography color="secondary">
               Choose the filtering type for your trackers.
             </Typography>
@@ -179,8 +184,32 @@ export function GeneralSettings() {
               movement.
             </Typography>
           </div>
-          <div className="flex  gap-5 pt-5">
-            <Select
+          <Typography>Filtering type</Typography>
+          <div className="flex flex-row gap-3 pt-2">
+            <Radio
+              control={control}
+              name="filtering.type"
+              label="No filtering"
+              desciption="Use measurements as is, will not do any filtering."
+              value={FilteringType.NONE}
+            ></Radio>
+            <Radio
+              control={control}
+              name="filtering.type"
+              label="Smoothing"
+              desciption="Smooths the movements but adds some latency."
+              value={FilteringType.INTERPOLATION}
+            ></Radio>
+            <Radio
+              control={control}
+              name="filtering.type"
+              label="Prediction"
+              desciption="Reduces latency and makes movements more snappy, but may increase jitter."
+              value={FilteringType.EXTRAPOLATION}
+            ></Radio>
+          </div>
+          <div className="flex gap-5 pt-5">
+            {/* <Select
               {...register('filtering.type')}
               label="Filtering Type"
               options={[
@@ -188,22 +217,22 @@ export function GeneralSettings() {
                 { label: 'Interpolation', value: 1 },
                 { label: 'Extrapolation', value: 2 },
               ]}
-            />
+            /> */}
+
             <NumberSelector
-              variant="smol"
               control={control}
               name="filtering.intensity"
               label="Intensity"
-              valueLabelFormat={(value) => `${value}%`}
+              valueLabelFormat={(value) => `${value} %`}
               min={0}
               max={100}
               step={10}
             />
             <NumberSelector
-              variant="smol"
               control={control}
               name="filtering.ticks"
               label="Ticks"
+              valueLabelFormat={(value) => `${value} ticks`}
               min={0}
               max={80}
               step={1}
@@ -211,10 +240,10 @@ export function GeneralSettings() {
           </div>
         </>
       </SettingsPageLayout>
-      <SettingsPageLayout id="interface">
+      <SettingsPageLayout icon={<SquaresIcon></SquaresIcon>} id="interface">
         <>
           <Typography variant="main-title">Interface</Typography>
-          <Typography>Developer Mode</Typography>
+          <Typography bold>Developer Mode</Typography>
           <div className="flex flex-col">
             <Typography color="secondary">
               This mode can be useful if you need indepth data or interact with

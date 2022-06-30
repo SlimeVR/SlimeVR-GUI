@@ -42,13 +42,18 @@ export function CheckBox({
         <div
           className={classNames(
             {
-              'bg-background-60 rounded-lg px-3 text-white': outlined,
+              'bg-background-60 rounded-lg text-white': outlined,
               'text-background-30': !outlined,
             },
-            'flex items-center gap-3'
+            'flex items-center gap-3 w-full'
           )}
         >
-          <label className="w-full py-3 flex gap-3 items-center text-standard-bold">
+          <label
+            className={classNames(
+              'w-full py-3 flex gap-3 items-center text-standard-bold',
+              { 'px-3': outlined }
+            )}
+          >
             <input
               ref={ref}
               onChange={onChange}

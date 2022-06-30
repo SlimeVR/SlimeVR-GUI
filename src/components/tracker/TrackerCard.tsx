@@ -176,7 +176,7 @@ export function TrackerCard({
   return (
     <TrackerSettings tracker={tracker} device={device}>
       <div
-        className="bg-background-60"
+        className="bg-background-60 rounded-lg"
         style={{
           boxShadow: `0px 0px ${velocity * 15}px ${velocity * 15}px #183951`,
         }}

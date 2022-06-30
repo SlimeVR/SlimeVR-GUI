@@ -8,11 +8,13 @@ export function NavButton({
   to,
   children,
   match,
+  state = {},
   icon,
 }: {
   to: string;
   children: ReactChild;
   match?: string;
+  state?: any;
   icon: ReactChild;
 }) {
   const doesMatch = useMatch({
@@ -22,6 +24,7 @@ export function NavButton({
   return (
     <NavLink
       to={to}
+      state={state}
       className={classnames(
         'flex flex-col justify-center gap-4 w-[75px] h-[75px] rounded-md group select-text',
         {
@@ -66,7 +69,11 @@ export function Navbar() {
           Setup Wizard
         </NavButton>
       </div>
-      <NavButton to="/settings/trackers" icon={<GearIcon></GearIcon>}>
+      <NavButton
+        to="/settings/trackers"
+        state={{ scrollTo: 'steamvr' }}
+        icon={<GearIcon></GearIcon>}
+      >
         Settings
       </NavButton>
     </div>

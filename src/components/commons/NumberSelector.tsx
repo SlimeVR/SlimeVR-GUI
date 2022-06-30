@@ -1,7 +1,6 @@
-import classNames from 'classnames';
-import { useMemo } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { Button } from './Button';
+import { Typography } from './Typography';
 
 export function NumberSelector({
   label,
@@ -11,7 +10,6 @@ export function NumberSelector({
   min,
   max,
   step,
-  variant,
 }: {
   label: string;
   valueLabelFormat?: (value: number) => string;
@@ -20,30 +18,7 @@ export function NumberSelector({
   min: number;
   max: number;
   step: number | ((value: number, add: boolean) => number);
-  variant: 'smol' | 'big';
 }) {
-  const variantClass = useMemo(() => {
-    const variantsMap = {
-      smol: {
-        container: classNames('flex flex-col gap-1'),
-        label: classNames('flex text-field-title'),
-        value: classNames(
-          'flex justify-center items-center w-10 text-field-title'
-        ),
-      },
-      big: {
-        container: classNames('flex flex-row gap-5'),
-        label: classNames(
-          'flex flex-grow justify-start items-center text-field-title'
-        ),
-        value: classNames(
-          'flex justify-center items-center w-16 text-field-title'
-        ),
-      },
-    };
-    return variantsMap[variant];
-  }, [variant]);
-
   const stepFn =
     typeof step === 'function'
       ? step
@@ -54,24 +29,26 @@ export function NumberSelector({
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => (
-        <div className={classNames(variantClass.container)}>
-          <div className={classNames(variantClass.label)}>{label}</div>
-          <div className="flex gap-3">
+        <div className="flex flex-col gap-1 w-full">
+          <Typography bold>{label}</Typography>
+          <div className="flex gap-3 bg-background-60 p-2 rounded-lg">
             <div className="flex">
               <Button
-                variant="primary"
+                variant="tierciary"
+                rounded
                 onClick={() => onChange(stepFn(value, false))}
                 disabled={stepFn(value, false) <= min}
               >
                 -
               </Button>
             </div>
-            <div className={classNames(variantClass.value)}>
+            <div className="flex flex-grow justify-center items-center w-10">
               {valueLabelFormat ? valueLabelFormat(value) : value}
             </div>
             <div className="flex">
               <Button
-                variant="primary"
+                variant="tierciary"
+                rounded
                 onClick={() => onChange(stepFn(value, true))}
                 disabled={stepFn(value, true) >= max}
               >

@@ -25,7 +25,7 @@ export function ProgressBar({
         ></div>
         <div
           className={classNames(
-            'bg-accent-background-20  rounded-lg overflow-hidden absolute top-0',
+            'bg-accent-background-20 rounded-lg overflow-hidden absolute top-0',
             { 'transition-all': progress > 0 }
           )}
           style={{

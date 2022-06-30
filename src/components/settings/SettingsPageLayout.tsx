@@ -1,12 +1,15 @@
 import classNames from 'classnames';
 import { ReactChild } from 'react';
-import { GearIcon } from '../commons/icon/GearIcon';
 
 export function SettingsPageLayout({
   children,
   className,
+  icon,
   ...props
-}: { children: ReactChild } & React.HTMLAttributes<HTMLDivElement>) {
+}: {
+  children: ReactChild;
+  icon: ReactChild;
+} & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={classNames(
@@ -17,10 +20,10 @@ export function SettingsPageLayout({
     >
       <div className="flex">
         <div className="w-10 h-10 bg-accent-background-40 flex justify-center items-center rounded-full fill-background-10">
-          <GearIcon></GearIcon>
+          {icon}
         </div>
       </div>
-      <div className="flex-col">{children}</div>
+      <div className="flex-col w-full">{children}</div>
     </div>
   );
 }
