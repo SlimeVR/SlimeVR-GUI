@@ -14,9 +14,7 @@
       "active": true,
       "targets": "all",
       "identifier": "slimevr.dev",
-      "icon": [
-        "icons/icon.ico"
-      ],
+      "icon": ["icons/icon.ico"],
       "resources": [],
       "externalBin": [],
       "copyright": "",
@@ -48,7 +46,7 @@
         "execute": true
       },
       "fs": {
-        "scope": ["$APP/*"],
+        "scope": ["$APP/*", "$APP"],
         "all": true
       },
       "window": {

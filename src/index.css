@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   font-variant-numeric: tabular-nums;
-  font-family: "poppins", sans-serif;
+  font-family: 'poppins', sans-serif;
   height: 100vh;
   width: 100vw;
   user-select: none;
@@ -20,7 +19,6 @@ html {
 #root {
   height: 100%;
 }
-
 
 ::-webkit-scrollbar {
   width: 10px;
