@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { ResetRequestT, ResetType, RpcMessage } from 'solarxr-protocol';
-import { useWebsocketAPI } from '../hooks/websocket-api';
-import { BigButton } from './commons/BigButton';
-import { QuickResetIcon, ResetIcon } from './commons/icon/ResetIcon';
+import { useWebsocketAPI } from '../../hooks/websocket-api';
+import { BigButton } from '../commons/BigButton';
+import { QuickResetIcon, ResetIcon } from '../commons/icon/ResetIcon';
 
 export function ResetButton({ type }: { type: ResetType }) {
   const timerid = useRef<NodeJS.Timer | null>(null);

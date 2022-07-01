@@ -44,7 +44,7 @@ export function TopBar({
         data-tauri-drag-region
       >
         {progress !== undefined && (
-          <ProgressBar progress={progress} height={3}></ProgressBar>
+          <ProgressBar progress={progress} height={3} parts={3}></ProgressBar>
         )}
       </div>
       <div className="flex justify-end px-2 gap-2" data-tauri-drag-region>

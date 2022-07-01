@@ -1,14 +1,20 @@
+import { useEffect } from 'react';
+import { useOnboarding } from '../../../hooks/onboarding';
 import { ArrowLink } from '../../commons/ArrowLink';
 import { Button } from '../../commons/Button';
 import { Input } from '../../commons/Input';
 import { Typography } from '../../commons/Typography';
 
 export function WifiCredsPage() {
+  const { applyProgress } = useOnboarding();
+
+  applyProgress(0.2);
+
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex flex-col w-full h-full justify-center items-center">
         <div className="flex gap-10">
-          <div className="flex flex-col max-w-sm gap-3">
+          <div className="flex flex-col max-w-sm">
             <ArrowLink to="/onboarding/home" direction="left">
               Go Back to introduction
             </ArrowLink>

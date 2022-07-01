@@ -185,7 +185,7 @@ export function GeneralSettings() {
             </Typography>
           </div>
           <Typography>Filtering type</Typography>
-          <div className="flex flex-row gap-3 pt-2">
+          <div className="flex lg:flex-row md:flex-col gap-3 pt-2">
             <Radio
               control={control}
               name="filtering.type"

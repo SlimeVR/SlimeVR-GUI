@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { createElement, ReactChild, useMemo } from 'react';
+import { createElement, ReactNode, useMemo } from 'react';
 
 export function Typography({
   variant = 'standard',
@@ -10,7 +10,7 @@ export function Typography({
   variant?: 'main-title' | 'section-title' | 'standard' | 'vr-accessible';
   bold?: boolean;
   color?: 'primary' | 'secondary';
-  children: ReactChild;
+  children: ReactNode;
 }) {
   const tag = useMemo(() => {
     const tags = {

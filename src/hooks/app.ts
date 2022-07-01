@@ -5,6 +5,7 @@ import {
   useEffect,
   useReducer,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   DataFeedConfigT,
   DataFeedMessage,
@@ -13,6 +14,7 @@ import {
   StartDataFeedT,
   TrackerDataMaskT,
 } from 'solarxr-protocol';
+import { useConfig } from './config';
 import { useWebsocketAPI } from './websocket-api';
 
 type AppStateAction = { type: 'datafeed'; value: DataFeedUpdateT };
@@ -38,6 +40,8 @@ export function reducer(state: AppState, action: AppStateAction) {
 export function useProvideAppContext(): AppContext {
   const { sendDataFeedPacket, useDataFeedPacket, isConnected } =
     useWebsocketAPI();
+  const { config } = useConfig();
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, {
     datafeed: new DataFeedUpdateT(),
   });
@@ -66,6 +70,12 @@ export function useProvideAppContext(): AppContext {
     }
   }, [isConnected]);
 
+  useEffect(() => {
+    if (config && !config.doneOnboarding) {
+      navigate('/onboarding/home');
+    }
+  }, [config]);
+
   useDataFeedPacket(
     DataFeedMessage.DataFeedUpdate,
     (packet: DataFeedUpdateT) => {
@@ -85,7 +95,7 @@ export const AppContextC = createContext<AppContext>(undefined as any);
 export function useAppContext() {
   const context = useContext<AppContext>(AppContextC);
   if (!context) {
-    throw new Error('useWebsocketAPI must be within a WebSocketApi Provider');
+    throw new Error('useAppContext must be within a AppContext Provider');
   }
   return context;
 }

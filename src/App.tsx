@@ -8,7 +8,7 @@ import {
   Route,
   Outlet,
 } from 'react-router-dom';
-import { Overview } from './components/Overview';
+import { Home } from './components/home/Home';
 import { BodyProportions } from './components/proportions/BodyProportions';
 import { AppContextProvider } from './components/providers/AppContext';
 import { useEffect } from 'react';
@@ -24,6 +24,7 @@ import { OnboardingLayout } from './components/onboarding/OnboardingLayout';
 import { HomePage } from './components/onboarding/pages/Home';
 import { WifiCredsPage } from './components/onboarding/pages/WifiCreds';
 import { ConnectTrackersPage } from './components/onboarding/pages/ConnectTracker';
+import { OnboardingContextProvider } from './components/onboarding/OnboardingContextProvicer';
 
 function Layout() {
   return (
@@ -33,7 +34,7 @@ function Layout() {
           path="/"
           element={
             <MainLayoutRoute>
-              <Overview />
+              <Home />
             </MainLayoutRoute>
           }
         />
@@ -59,9 +60,11 @@ function Layout() {
         <Route
           path="/onboarding"
           element={
-            <OnboardingLayout>
-              <Outlet></Outlet>
-            </OnboardingLayout>
+            <OnboardingContextProvider>
+              <OnboardingLayout>
+                <Outlet></Outlet>
+              </OnboardingLayout>
+            </OnboardingContextProvider>
           }
         >
           <Route path="home" element={<HomePage />} />
@@ -118,10 +121,10 @@ function App() {
   }, []);
 
   return (
-    <ConfigContextProvider>
-      <WebSocketApiContext.Provider value={websocketAPI}>
-        <AppContextProvider>
-          <Router>
+    <Router>
+      <ConfigContextProvider>
+        <WebSocketApiContext.Provider value={websocketAPI}>
+          <AppContextProvider>
             <div className="h-full w-full text-standard bg-background-80 text-background-10">
               <div className="flex-col h-full">
                 {!websocketAPI.isConnected && (
@@ -135,10 +138,10 @@ function App() {
                 {websocketAPI.isConnected && <Layout></Layout>}
               </div>
             </div>
-          </Router>
-        </AppContextProvider>
-      </WebSocketApiContext.Provider>
-    </ConfigContextProvider>
+          </AppContextProvider>
+        </WebSocketApiContext.Provider>
+      </ConfigContextProvider>
+    </Router>
   );
 }
 

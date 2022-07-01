@@ -1,9 +1,14 @@
 import { NavLink } from 'react-router-dom';
+import { useOnboarding } from '../../../hooks/onboarding';
 import { Button } from '../../commons/Button';
 import { SlimeVRIcon } from '../../commons/icon/SimevrIcon';
 import { Typography } from '../../commons/Typography';
 
 export function HomePage() {
+  const { applyProgress } = useOnboarding();
+
+  applyProgress(0.1);
+
   return (
     <div className="flex flex-col gap-5 h-full items-center w-full justify-center">
       <SlimeVRIcon></SlimeVRIcon>

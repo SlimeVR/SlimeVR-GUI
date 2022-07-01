@@ -1,7 +1,13 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 
-export function WifiIcon({ value }: { value: number }) {
+export function WifiIcon({
+  value,
+  disabled = false,
+}: {
+  value: number;
+  disabled?: boolean;
+}) {
   const percent = useMemo(
     () =>
       value
@@ -24,20 +30,21 @@ export function WifiIcon({ value }: { value: number }) {
     const val = Object.keys(colorsMap)
       .filter((key) => +key < percent)
       .sort((a, b) => +b - +a)[0];
-    return colorsMap[+val] || 'fill-primary-gray-600';
-  }, [percent]);
+    return disabled
+      ? 'fill-background-40'
+      : colorsMap[+val] || 'fill-background-10';
+  }, [percent, disabled]);
 
   return (
     <svg
       width="16"
       height="13"
       viewBox="0 0 16 13"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M7.799 12.378L15.585 2.67801C13.3492 0.95947 10.6129 0.01903 7.793 1.00136e-05C4.9725 0.0172 2.23528 0.95782 0 2.67801L7.786 12.378L7.793 12.385L7.799 12.378Z"
-        fill="#4C3755"
+        fill="#3D6381"
       />
       <mask
         id="mask0_0_1"

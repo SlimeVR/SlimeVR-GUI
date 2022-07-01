@@ -1,12 +1,12 @@
-import { ReactChild } from 'react';
+import { ReactNode } from 'react';
 import { ResetType } from 'solarxr-protocol';
 import { useLayout } from '../hooks/layout';
 import { BVHButton } from './BVHButton';
 import { Navbar } from './Navbar';
-import { ResetButton } from './ResetButton';
+import { ResetButton } from './home/ResetButton';
 import { TopBar } from './TopBar';
 
-export function MainLayoutRoute({ children }: { children: ReactChild }) {
+export function MainLayoutRoute({ children }: { children: ReactNode }) {
   const { layoutHeight, ref } = useLayout<HTMLDivElement>();
 
   return (

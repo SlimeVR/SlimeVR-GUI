@@ -1,44 +1,43 @@
 import classNames from 'classnames';
+import { useMemo } from 'react';
 
 export function ProgressBar({
   progress,
-  separations = 3,
+  parts = 1,
   height = 10,
 }: {
   progress: number;
-  separations?: number;
+  parts?: number;
   height?: number;
 }) {
-  return (
-    <div className="flex flex-col w-full">
-      <div className="relative">
-        {/* <div className="flex flex-row gap-5">
-                <div className={classNames("bg-transparent flex flex-grow")} style={{ height: `${height}px`}}></div>
-                <div className={classNames("bg-transparent flex flex-grow")} style={{ height: `${height}px`}}></div>
-                <div className={classNames("bg-transparent flex flex-grow")} style={{ height: `${height}px`}}></div>
-            </div> */}
+  const Bar = ({ index }: { index: number }) => {
+    const value = useMemo(
+      () => Math.min(Math.max((progress * parts) / 1 - index, 0), 1),
+      [index, progress]
+    );
+    return (
+      <div
+        className="flex relative flex-grow bg-background-50 rounded-lg overflow-hidden"
+        style={{ height: `${height}px` }}
+      >
         <div
           className={classNames(
-            'bg-background-50 rounded-lg overflow-hidden top-0 absolute'
-          )}
-          style={{ width: '100%', height: `${height}px` }}
-        ></div>
-        <div
-          className={classNames(
-            'bg-accent-background-20 rounded-lg overflow-hidden absolute top-0',
-            { 'transition-all': progress > 0 }
+            'bg-accent-background-20 rounded-lg overflow-hidden absolute top-0'
           )}
           style={{
-            width: `${progress * 100}%`,
+            width: `${value * 100}%`,
             height: `${height}px`,
           }}
         ></div>
       </div>
-      {/* <div className="flex flex-row overflow-hidden  gap-5" style={{marginTop: `${-height}px`}}>
-            <div className={classNames("bg-transparent flex flex-grow")} style={{ height: `${height}px`}}></div>
-            <div className={classNames("bg-transparent flex flex-grow")} style={{ height: `${height}px`}}></div>
-            <div className={classNames("bg-transparent flex flex-grow")} style={{ height: `${height}px`}}></div>
-        </div> */}
+    );
+  };
+
+  return (
+    <div className="flex w-full flex-row gap-2">
+      {Array.from({ length: parts }).map((_, key) => (
+        <Bar index={key} key={key}></Bar>
+      ))}
     </div>
   );
 }
