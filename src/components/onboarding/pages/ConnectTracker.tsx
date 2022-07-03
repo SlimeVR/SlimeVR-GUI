@@ -106,7 +106,7 @@ export function ConnectTrackersPage() {
         }
 
         if (
-          // eslint-disable-next-line prettier/prettier
+          // eslint-disable-next-line quotes
           log.includes("Can't connect from any credentials")
         ) {
           setConnectionStatus('ERROR');
