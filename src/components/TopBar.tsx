@@ -15,9 +15,9 @@ export function TopBar({
   progress?: number;
 }) {
   return (
-    <div data-tauri-drag-region className="flex gap-2 h-[38px]">
+    <div data-tauri-drag-region className="flex gap-2 h-[38px]  z-50">
       <div
-        className="flex px-2 pb-1 mt-3 justify-around"
+        className="flex px-2 pb-1 mt-3 justify-around z-50"
         data-tauri-drag-region
       >
         <div className="flex gap-1" data-tauri-drag-region>
@@ -40,14 +40,19 @@ export function TopBar({
         </div>
       </div>
       <div
-        className="flex flex-grow flex-col justify-center px-10 h-full"
+        className="flex flex-grow items-center h-full justify-center  z-50"
         data-tauri-drag-region
       >
-        {progress !== undefined && (
-          <ProgressBar progress={progress} height={3} parts={3}></ProgressBar>
-        )}
+        <div
+          className="flex max-w-xl h-full items-center w-full"
+          data-tauri-drag-region
+        >
+          {progress !== undefined && (
+            <ProgressBar progress={progress} height={3} parts={3}></ProgressBar>
+          )}
+        </div>
       </div>
-      <div className="flex justify-end px-2 gap-2" data-tauri-drag-region>
+      <div className="flex justify-end px-2 gap-2 z-50" data-tauri-drag-region>
         <div
           className="flex flex-col justify-around "
           onClick={() => appWindow.minimize()}

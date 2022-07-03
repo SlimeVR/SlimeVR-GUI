@@ -9,6 +9,7 @@ export function Typography({
 }: {
   variant?: 'main-title' | 'section-title' | 'standard' | 'vr-accessible';
   bold?: boolean;
+  block?: boolean;
   color?: 'primary' | 'secondary';
   children: ReactNode;
 }) {

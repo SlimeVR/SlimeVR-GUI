@@ -1,6 +1,5 @@
 import { ReactChild, useMemo, useState } from 'react';
 import { Button } from '../commons/Button';
-import { AppModal } from '../Modal';
 import { Select } from '../commons/Select';
 import { useWebsocketAPI } from '../../hooks/websocket-api';
 import { useForm } from 'react-hook-form';
@@ -17,6 +16,7 @@ import {
   QuaternionToQuatT,
 } from '../../maths/quaternion';
 import { Quaternion } from 'math3d';
+import { EmptyModal } from '../commons/Modal';
 
 const rotationToQuatMap = {
   FRONT: 180,
@@ -100,17 +100,7 @@ export function TrackerSettings({
       <div onClick={openSettings} className="cursor-pointer">
         {children}
       </div>
-      <AppModal
-        isOpen={open}
-        onRequestClose={() => setOpen(false)}
-        name={
-          <>
-            {tracker.info?.bodyPart
-              ? `${BodyPart[tracker.info?.bodyPart]} Settings`
-              : 'Tracker Settings'}
-          </>
-        }
-      >
+      <EmptyModal isOpen={open} onRequestClose={() => setOpen(false)}>
         <form
           onSubmit={handleSubmit(handleSaveSettings)}
           className="flex flex-col gap-5"
@@ -140,7 +130,7 @@ export function TrackerSettings({
             </Button>
           </div>
         </form>
-      </AppModal>
+      </EmptyModal>
     </>
   );
 }

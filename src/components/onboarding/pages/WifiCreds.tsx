@@ -1,17 +1,47 @@
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { useOnboarding } from '../../../hooks/onboarding';
 import { ArrowLink } from '../../commons/ArrowLink';
 import { Button } from '../../commons/Button';
 import { Input } from '../../commons/Input';
 import { Typography } from '../../commons/Typography';
 
+export interface WifiForm {
+  ssid: string;
+  password: string;
+}
+
 export function WifiCredsPage() {
-  const { applyProgress } = useOnboarding();
+  const navigate = useNavigate();
+  const { applyProgress, state, setWifiCredentials } = useOnboarding();
+  const { register, reset, control, watch, handleSubmit, formState } =
+    useForm<WifiForm>({
+      defaultValues: {},
+      mode: 'onChange',
+    });
 
   applyProgress(0.2);
 
+  useEffect(() => {
+    if (state.wifi) {
+      reset({
+        ssid: state.wifi.ssid,
+        password: state.wifi.password,
+      });
+    }
+  }, []);
+
+  const submitWifiCreds = (value: WifiForm) => {
+    setWifiCredentials(value.ssid, value.password);
+    navigate('/onboarding/connect-trackers');
+  };
+
   return (
-    <div className="flex flex-col w-full h-full">
+    <form
+      className="flex flex-col w-full h-full"
+      onSubmit={handleSubmit(submitWifiCreds)}
+    >
       <div className="flex flex-col w-full h-full justify-center items-center">
         <div className="flex gap-10">
           <div className="flex flex-col max-w-sm">
@@ -27,8 +57,14 @@ export function WifiCredsPage() {
             </Typography>
           </div>
           <div className="flex flex-col bg-background-70 gap-3 p-10 rounded-xl max-w-sm">
-            <Input type="text" label="SSID" placeholder="Enter SSID" />
             <Input
+              {...register('ssid', { required: true })}
+              type="text"
+              label="SSID"
+              placeholder="Enter SSID"
+            />
+            <Input
+              {...register('password', { required: true })}
               type="password"
               label="Password"
               placeholder="Enter password"
@@ -44,14 +80,14 @@ export function WifiCredsPage() {
           </Button>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary" to="/onboarding/connect-trackers">
+          <Button variant="secondary" to="/onboarding/mounting">
             Don't use WiFi
           </Button>
-          <Button variant="primary" to="/onboarding/connect-trackers">
+          <Button type="submit" variant="primary" disabled={!formState.isValid}>
             Submit!
           </Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

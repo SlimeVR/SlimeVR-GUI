@@ -49,6 +49,9 @@
         "scope": ["$APP/*", "$APP"],
         "all": true
       },
+      "path": {
+        "all": true
+      },
       "window": {
         "setResizable": true,
         "setTitle": true,
@@ -63,10 +66,10 @@
     "windows": [
       {
         "title": "Slimevr UI",
-        "width": 1150,
-        "height": 790,
-        "minWidth": 740,
-        "minHeight": 790,
+        "width": 1289,
+        "height": 709,
+        "minWidth": 880,
+        "minHeight": 709,
         "resizable": true,
         "fullscreen": false,
         "decorations": false,

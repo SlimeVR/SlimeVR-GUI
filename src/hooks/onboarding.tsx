@@ -1,31 +1,61 @@
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
+  Reducer,
   useContext,
   useEffect,
-  useState,
+  useReducer,
 } from 'react';
 
-export interface OnboardingContext {
+type OnboardingAction =
+  | { type: 'progress'; value: number }
+  | { type: 'wifi-creds'; ssid: string; password: string };
+
+interface OnboardingState {
   progress: number;
-  setProgress: Dispatch<SetStateAction<number>>;
+  wifi?: { ssid: string; password: string };
+}
+
+export interface OnboardingContext {
+  state: OnboardingState;
   applyProgress: (value: number) => void;
+  setWifiCredentials: (ssid: string, password: string) => void;
+}
+
+export function reducer(state: OnboardingState, action: OnboardingAction) {
+  switch (action.type) {
+    case 'wifi-creds':
+      return {
+        ...state,
+        wifi: { ssid: action.ssid, password: action.password },
+      };
+    case 'progress':
+      return {
+        ...state,
+        progress: action.value,
+      };
+    default:
+      throw new Error(`unhandled state action ${(action as any).type}`);
+  }
 }
 
 export function useProvideOnboarding(): OnboardingContext {
-  const [progress, setProgress] = useState(0);
-
-  const applyProgress = (value: number) => {
-    useEffect(() => {
-      setProgress(value);
-    }, []);
-  };
+  const [state, dispatch] = useReducer<
+    Reducer<OnboardingState, OnboardingAction>
+  >(reducer, {
+    progress: 0,
+  });
 
   return {
-    progress,
-    setProgress,
-    applyProgress,
+    state,
+    applyProgress: (value: number) => {
+      useEffect(() => {
+        dispatch({ type: 'progress', value });
+      }, []);
+    },
+    setWifiCredentials: (ssid: string, password: string) => {
+      console.log('ssid', ssid);
+      dispatch({ type: 'wifi-creds', ssid, password });
+    },
   };
 }
 

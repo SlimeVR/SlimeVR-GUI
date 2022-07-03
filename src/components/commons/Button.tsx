@@ -49,9 +49,10 @@ export function Button({
       {
         'rounded-full p-2 text-center min-h-[35px] min-w-[35px]': rounded,
         'rounded-md px-5 py-2.5': !rounded,
-      }
+      },
+      props.className
     );
-  }, [variant, disabled]);
+  }, [variant, disabled, rounded]);
 
   const ButtonContent = () => (
     <>
@@ -69,7 +70,7 @@ export function Button({
         {children}
       </div>
       {loading && (
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center fill-background-10">
           <LoaderIcon youSpinMeRightRoundBabyRightRound></LoaderIcon>
         </div>
       )}

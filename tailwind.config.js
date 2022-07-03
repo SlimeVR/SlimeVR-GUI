@@ -1,6 +1,6 @@
 const plugin = require('tailwindcss/plugin');
 
-const pt = (pt) => `${pt}pt`;
+const rem = (pt) => `${pt / 16}rem`;
 
 const colors = {
   'blue-gray': {
@@ -51,7 +51,7 @@ module.exports = {
         ),
       },
       fontSize: {
-        DEFAULT: pt(10),
+        DEFAULT: rem(10),
       },
       fontWeight: {
         DEFAULT: 500,
@@ -70,12 +70,12 @@ module.exports = {
       });
 
       addUtilities({
-        '.text-main-title': textConfig(pt(25), 700),
-        '.text-section-title': textConfig(pt(12), 700),
-        '.text-standard': textConfig(pt(10), 500),
-        '.text-vr-accesible': textConfig(pt(14), 500),
-        '.text-vr-accesible-bold': textConfig(pt(14), 700),
-        '.text-standard-bold': textConfig(pt(10), 700),
+        '.text-main-title': textConfig(rem(25), 700),
+        '.text-section-title': textConfig(rem(12), 700),
+        '.text-standard': textConfig(rem(10), 500),
+        '.text-vr-accesible': textConfig(rem(14), 500),
+        '.text-vr-accesible-bold': textConfig(rem(14), 700),
+        '.text-standard-bold': textConfig(rem(10), 700),
       });
     }),
   ],

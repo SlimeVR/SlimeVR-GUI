@@ -11,6 +11,7 @@ import { TrackerBattery } from './TrackerBattery';
 import { TrackerWifi } from './TrackerWifi';
 import { TrackerStatus } from './TrackerStatus';
 import { FootIcon } from '../commons/icon/FootIcon';
+import { TrackerSettings } from './TrackerSettings';
 
 function TrackerBig({
   device,
@@ -65,7 +66,7 @@ function TrackerSmol({
   trackerName: string | Uint8Array;
 }) {
   return (
-    <div className="flex rounded-md py-5 px-5 w-full gap-4 box-border">
+    <div className="flex rounded-md py-3 px-5 w-full gap-4 h-16">
       <div className="flex flex-col justify-center items-center fill-background-10">
         <FootIcon></FootIcon>
       </div>
@@ -139,32 +140,34 @@ export function TrackerCard({
   }, [tracker.rotation]);
 
   const trackerName = useMemo(() => {
-    if (device?.customName) return device.customName;
+    if (tracker.info?.customName) return tracker.info?.customName;
     if (tracker.info?.bodyPart) return BodyPart[tracker.info?.bodyPart];
-    return device?.hardwareInfo?.displayName || 'NONE';
-  }, [tracker.info, device?.customName, device?.hardwareInfo?.displayName]);
+    return tracker.info?.displayName || 'NONE';
+  }, [tracker.info]);
 
   return (
-    <div
-      className="bg-background-60 rounded-lg"
-      style={{
-        boxShadow: `0px 0px ${velocity * 15}px ${velocity * 15}px #183951`,
-      }}
-    >
-      {smol && (
-        <TrackerSmol
-          tracker={tracker}
-          device={device}
-          trackerName={trackerName}
-        ></TrackerSmol>
-      )}
-      {!smol && (
-        <TrackerBig
-          tracker={tracker}
-          device={device}
-          trackerName={trackerName}
-        ></TrackerBig>
-      )}
-    </div>
+    <TrackerSettings tracker={tracker} device={device}>
+      <div
+        className="bg-background-60 rounded-lg"
+        style={{
+          boxShadow: `0px 0px ${velocity * 8}px ${velocity * 8}px #183951`,
+        }}
+      >
+        {smol && (
+          <TrackerSmol
+            tracker={tracker}
+            device={device}
+            trackerName={trackerName}
+          ></TrackerSmol>
+        )}
+        {!smol && (
+          <TrackerBig
+            tracker={tracker}
+            device={device}
+            trackerName={trackerName}
+          ></TrackerBig>
+        )}
+      </div>
+    </TrackerSettings>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from 'solarxr-protocol';
 import { useWebsocketAPI } from '../../hooks/websocket-api';
 import { Button } from '../commons/Button';
-import { AppModal } from '../Modal';
+import { EmptyModal } from '../commons/Modal';
 import { bodyPartLabels } from './BodyProportions';
 
 export function AutomaticCalibration() {
@@ -136,11 +136,7 @@ export function AutomaticCalibration() {
       <Button variant="primary" onClick={() => setOpen(true)}>
         Automatic calibration
       </Button>
-      <AppModal
-        isOpen={isOpen}
-        name={<>Automatic Calibration</>}
-        onRequestClose={() => setOpen(false)}
-      >
+      <EmptyModal isOpen={isOpen} onRequestClose={() => setOpen(false)}>
         <>
           <div className="flex w-full justify-center gap-3">
             <Button
@@ -208,7 +204,7 @@ export function AutomaticCalibration() {
             </Button>
           </div>
         </>
-      </AppModal>
+      </EmptyModal>
     </>
   );
 }

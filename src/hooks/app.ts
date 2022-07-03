@@ -1,8 +1,10 @@
 import {
   createContext,
   Dispatch,
+  Reducer,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,20 +13,28 @@ import {
   DataFeedMessage,
   DataFeedUpdateT,
   DeviceDataMaskT,
+  DeviceDataT,
   StartDataFeedT,
   TrackerDataMaskT,
+  TrackerDataT,
 } from 'solarxr-protocol';
 import { useConfig } from './config';
 import { useWebsocketAPI } from './websocket-api';
 
+export interface FlatDeviceTracker {
+  device?: DeviceDataT;
+  tracker: TrackerDataT;
+}
+
 type AppStateAction = { type: 'datafeed'; value: DataFeedUpdateT };
 
 export interface AppState {
-  datafeed: DataFeedUpdateT;
+  datafeed?: DataFeedUpdateT;
 }
 
 export interface AppContext {
   state: AppState;
+  trackers: FlatDeviceTracker[];
   dispatch: Dispatch<AppStateAction>;
 }
 
@@ -42,9 +52,12 @@ export function useProvideAppContext(): AppContext {
     useWebsocketAPI();
   const { config } = useConfig();
   const navigate = useNavigate();
-  const [state, dispatch] = useReducer(reducer, {
-    datafeed: new DataFeedUpdateT(),
-  });
+  const [state, dispatch] = useReducer<Reducer<AppState, AppStateAction>>(
+    reducer,
+    {
+      datafeed: new DataFeedUpdateT(),
+    }
+  );
 
   useEffect(() => {
     if (isConnected) {
@@ -76,6 +89,18 @@ export function useProvideAppContext(): AppContext {
     }
   }, [config]);
 
+  const trackers = useMemo(
+    () =>
+      (state.datafeed?.devices || []).reduce<FlatDeviceTracker[]>(
+        (curr, device) => [
+          ...curr,
+          ...device.trackers.map((tracker) => ({ tracker, device })),
+        ],
+        []
+      ),
+    [state]
+  );
+
   useDataFeedPacket(
     DataFeedMessage.DataFeedUpdate,
     (packet: DataFeedUpdateT) => {
@@ -85,11 +110,11 @@ export function useProvideAppContext(): AppContext {
 
   return {
     state,
+    trackers,
     dispatch,
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AppContextC = createContext<AppContext>(undefined as any);
 
 export function useAppContext() {

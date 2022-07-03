@@ -13,13 +13,13 @@ export function MainLayoutRoute({ children }: { children: ReactNode }) {
     <>
       <TopBar></TopBar>
       <div ref={ref} className="flex-grow" style={{ height: layoutHeight }}>
-        <div className="flex h-full pb-4">
+        <div className="flex h-full pb-3">
           <Navbar></Navbar>
-          <div className="flex gap-3 mr-4 w-full">
+          <div className="flex gap-2 mr-3 w-full">
             <div className="flex flex-grow gap-10 flex-col rounded-xl bg-background-70">
               {children}
             </div>
-            <div className="flex flex-col px-4 w-[274px] gap-3 pt-5 rounded-xl overflow-y-auto bg-background-70">
+            <div className="flex flex-col px-4 w-[274px] gap-2 pt-4 rounded-xl overflow-y-auto bg-background-70">
               <div className="flex">
                 <ResetButton type={ResetType.Quick}></ResetButton>
               </div>

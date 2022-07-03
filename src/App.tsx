@@ -25,6 +25,7 @@ import { HomePage } from './components/onboarding/pages/Home';
 import { WifiCredsPage } from './components/onboarding/pages/WifiCreds';
 import { ConnectTrackersPage } from './components/onboarding/pages/ConnectTracker';
 import { OnboardingContextProvider } from './components/onboarding/OnboardingContextProvicer';
+import { MountingPage } from './components/onboarding/pages/mouting/Mounting';
 
 function Layout() {
   return (
@@ -70,6 +71,7 @@ function Layout() {
           <Route path="home" element={<HomePage />} />
           <Route path="wifi-creds" element={<WifiCredsPage />} />
           <Route path="connect-trackers" element={<ConnectTrackersPage />} />
+          <Route path="mounting" element={<MountingPage />} />
         </Route>
         <Route path="*" element={<TopBar></TopBar>}></Route>
       </Routes>

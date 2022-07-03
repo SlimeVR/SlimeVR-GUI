@@ -6,7 +6,7 @@ export function CheckBox({
   label,
   variant = 'checkbox',
   control,
-  outlined = true,
+  outlined,
   name,
   ...props
 }: {
@@ -45,12 +45,12 @@ export function CheckBox({
               'bg-background-60 rounded-lg text-white': outlined,
               'text-background-30': !outlined,
             },
-            'flex items-center gap-3 w-full'
+            'flex items-center gap-2 w-full'
           )}
         >
           <label
             className={classNames(
-              'w-full py-3 flex gap-3 items-center text-standard-bold',
+              'w-full py-3 flex gap-2 items-center text-standard-bold',
               { 'px-3': outlined }
             )}
           >

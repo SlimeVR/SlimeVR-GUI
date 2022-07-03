@@ -22,7 +22,7 @@ export function Radio({
       render={({ field: { onChange, ref, name, value: checked } }) => (
         <label
           className={classNames(
-            'w-full bg-background-60 p-4 rounded-md flex gap-3 border-2',
+            'w-full bg-background-60 p-3 rounded-md flex gap-3 border-2',
             {
               'border-accent-background-30': value == checked,
               'border-transparent': value != checked,
@@ -38,7 +38,7 @@ export function Radio({
             value={value}
             checked={value == checked}
           ></input>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
             <Typography bold>{label}</Typography>
             {desciption && (
               <Typography variant="standard" color="secondary">

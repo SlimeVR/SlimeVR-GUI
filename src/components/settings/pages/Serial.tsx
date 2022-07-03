@@ -87,13 +87,13 @@ export function Serial() {
 
   return (
     <form
-      className="flex flex-col h-full gap-2"
+      className="flex flex-col h-full gap-2 flex-grow bg-background-70 rounded-md overflow-hidden"
       onSubmit={handleSubmit(sendWifiCredentials)}
     >
       <div
         ref={consoleRef}
         style={{ height: layoutHeight, width: layoutWidth }}
-        className="overflow-x-auto overflow-y-auto flex select-text pl-3"
+        className="overflow-x-auto overflow-y-auto flex select-text"
       >
         <pre>
           {isSerialOpen
@@ -101,7 +101,7 @@ export function Serial() {
             : 'Connection to serial lost, Reconnecting...'}
         </pre>
       </div>
-      <div className="flex flex-col gap-2 p-3">
+      <div className="flex flex-col gap-2 m-4">
         <Input
           {...register('ssid', { required: true })}
           type="text"

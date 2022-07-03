@@ -185,7 +185,7 @@ export function GeneralSettings() {
             </Typography>
           </div>
           <Typography>Filtering type</Typography>
-          <div className="flex lg:flex-row md:flex-col gap-3 pt-2">
+          <div className="flex lg:flex-row sm:flex-col gap-3 pt-2">
             <Radio
               control={control}
               name="filtering.type"
@@ -256,6 +256,7 @@ export function GeneralSettings() {
             <CheckBox
               variant="toggle"
               control={control}
+              outlined
               name="interface.devmode"
               label="Developper mode"
             />

@@ -1,28 +1,11 @@
 import { useMemo } from 'react';
-import { BodyPart, DeviceDataT, TrackerDataT } from 'solarxr-protocol';
+import { BodyPart } from 'solarxr-protocol';
 import { useAppContext } from '../../hooks/app';
 import { Typography } from '../commons/Typography';
 import { TrackerCard } from '../tracker/TrackerCard';
 
-interface FlatDeviceTracker {
-  device?: DeviceDataT;
-  tracker: TrackerDataT;
-}
-
 export function Home() {
-  const { state } = useAppContext();
-
-  const trackers = useMemo(
-    () =>
-      (state.datafeed?.devices || []).reduce<FlatDeviceTracker[]>(
-        (curr, device) => [
-          ...curr,
-          ...device.trackers.map((tracker) => ({ tracker, device })),
-        ],
-        []
-      ),
-    [state]
-  );
+  const { trackers } = useAppContext();
 
   const asignedTrackers = useMemo(
     () =>
@@ -45,7 +28,7 @@ export function Home() {
       <div className="flex px-5 pt-5">
         <Typography variant="section-title">Assigned Trackers</Typography>
       </div>
-      <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-5 sm:grid-cols-1 px-8 my-4">
+      <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-3 sm:grid-cols-1 px-8 my-4">
         {asignedTrackers.map(({ tracker, device }, index) => (
           <TrackerCard key={index} tracker={tracker} device={device} smol />
         ))}
