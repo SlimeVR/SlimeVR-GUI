@@ -152,7 +152,7 @@ export function GeneralSettings() {
               outlined
               control={control}
               name="trackers.legs"
-              label="Legs"
+              label="Feet"
             />
             <CheckBox
               variant="toggle"
