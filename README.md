@@ -3,7 +3,7 @@
 
 This is the GUI of SlimeVR, it uses the SolarXR protocol to communicate with the server and is completely isolated from the server logic.
 
-This project is written in Typescript and using Tauri as the backend. Tauri is written in Rust.
+This project is written in Typescript + React for the frontend and uses Tauri + Rust as a small backend. This makes the application more lightweight than electron.
 
 ## Prerequisites
 
