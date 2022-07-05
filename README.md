@@ -5,13 +5,15 @@ This is the GUI of SlimeVR, it uses the SolarXR protocol to communicate with the
 
 This project is written in Typescript + React for the frontend and uses Tauri + Rust as a small backend. This makes the application more lightweight than electron.
 
-## Prerequisites
+
+
+## Compiling
+### Prerequisites
 
 - Node.js 16 (We recommend the use of `nvm` instead of installing Node.js directly)
 - Windows Webview
 - SlimeVR server installed
 
-## Compiling
 
 ```
 npm install
