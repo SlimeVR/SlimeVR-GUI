@@ -152,7 +152,7 @@ export function GeneralSettings() {
               outlined
               control={control}
               name="trackers.legs"
-              label="Legs"
+              label="Feet"
             />
             <CheckBox
               variant="toggle"
@@ -231,10 +231,10 @@ export function GeneralSettings() {
             <NumberSelector
               control={control}
               name="filtering.ticks"
-              label="Ticks"
+              label="Latency"
               valueLabelFormat={(value) => `${value} ticks`}
               min={0}
-              max={80}
+              max={50}
               step={1}
             />
           </div>
@@ -246,10 +246,10 @@ export function GeneralSettings() {
           <Typography bold>Developer Mode</Typography>
           <div className="flex flex-col">
             <Typography color="secondary">
-              This mode can be useful if you need indepth data or interact with
+              This mode can be useful if you need in-depth data or to interact
             </Typography>
             <Typography color="secondary">
-              connected trackers in a more advanced level
+              with connected trackers on a more advanced level
             </Typography>
           </div>
           <div className="grid grid-cols-2 gap-3 pt-3">
