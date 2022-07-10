@@ -98,8 +98,10 @@ export function ConnectTrackersPage() {
           }, 3000);
         }
 
-        // eslint-disable-next-line prettier/prettier
-        if (log.includes("Can't connect from any credentials")) {
+        if (
+          // eslint-disable-next-line quotes
+          log.includes("Can't connect from any credentials")
+        ) {
           setConnectionStatus('ERROR');
         }
       }
