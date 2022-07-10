@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CloseSerialRequestT,
@@ -7,11 +7,10 @@ import {
   RpcMessage,
   SerialUpdateResponseT,
   SetWifiRequestT,
-  TrackerStatus,
 } from 'solarxr-protocol';
-import { useAppContext } from '../../../hooks/app';
 import { useLayout } from '../../../hooks/layout';
 import { useOnboarding } from '../../../hooks/onboarding';
+import { useTrackers } from '../../../hooks/tracker';
 import { useWebsocketAPI } from '../../../hooks/websocket-api';
 import { ArrowLink } from '../../commons/ArrowLink';
 import { Button } from '../../commons/Button';
@@ -38,8 +37,8 @@ const statusLabelMap = {
 
 export function ConnectTrackersPage() {
   const { layoutHeight, ref } = useLayout<HTMLDivElement>();
-  const { trackers } = useAppContext();
-  const { applyProgress, state } = useOnboarding();
+  const { trackers, useConnectedTrackers } = useTrackers();
+  const { applyProgress, state, skipSetup } = useOnboarding();
   const navigate = useNavigate();
   const { sendRPCPacket, useRPCPacket } = useWebsocketAPI();
   const [isSerialOpen, setSerialOpen] = useState(false);
@@ -48,13 +47,7 @@ export function ConnectTrackersPage() {
 
   applyProgress(0.4);
 
-  const connectedTrackers = useMemo(
-    () =>
-      trackers.filter(
-        ({ tracker }) => tracker.status !== TrackerStatus.DISCONNECTED
-      ),
-    [trackers]
-  );
+  const connectedTrackers = useConnectedTrackers();
 
   useEffect(() => {
     if (!state.wifi) {
@@ -105,10 +98,8 @@ export function ConnectTrackersPage() {
           }, 3000);
         }
 
-        if (
-          // eslint-disable-next-line prettier/prettier
-          log.includes("Can't connect from any credentials")
-        ) {
+        // eslint-disable-next-line prettier/prettier
+        if (log.includes("Can't connect from any credentials")) {
           setConnectionStatus('ERROR');
         }
       }
@@ -215,7 +206,7 @@ export function ConnectTrackersPage() {
       >
         <div className="w-full flex">
           <div className="flex flex-grow">
-            <Button variant="secondary" to="/">
+            <Button variant="secondary" to="/" onClick={skipSetup}>
               Skip setup
             </Button>
           </div>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BodyPart,
   DeviceDataT,
@@ -12,25 +12,31 @@ import { TrackerWifi } from './TrackerWifi';
 import { TrackerStatus } from './TrackerStatus';
 import { FootIcon } from '../commons/icon/FootIcon';
 import { TrackerSettings } from './TrackerSettings';
+import classNames from 'classnames';
+import { useTracker } from '../../hooks/tracker';
 
 function TrackerBig({
   device,
   tracker,
-  trackerName,
 }: {
   tracker: TrackerDataT;
   device?: DeviceDataT;
-  trackerName: string | Uint8Array;
 }) {
+  const { useName } = useTracker(tracker);
+
+  const trackerName = useName();
+
   return (
-    <div className="flex flex-col justify-center rounded-md py-3 pr-4 pl-4 w-full gap-2 box-border my-8 px-6 h-52">
+    <div className="flex flex-col justify-center rounded-md py-3 pr-4 pl-4 w-full gap-2 box-border my-8 px-6 h-32">
       <div className="flex justify-center fill-background-10">
         <FootIcon></FootIcon>
       </div>
       <div className="flex justify-center">
         <Typography bold>{trackerName}</Typography>
       </div>
-      <TrackerStatus status={tracker.status}></TrackerStatus>
+      <div className="flex justify-center">
+        <TrackerStatus status={tracker.status}></TrackerStatus>
+      </div>
       <div className="flex text-default justify-center gap-5 flex-wrap">
         {device && device.hardwareStatus && (
           <>
@@ -59,12 +65,14 @@ function TrackerBig({
 function TrackerSmol({
   device,
   tracker,
-  trackerName,
 }: {
   tracker: TrackerDataT;
   device?: DeviceDataT;
-  trackerName: string | Uint8Array;
 }) {
+  const { useName } = useTracker(tracker);
+
+  const trackerName = useName();
+
   return (
     <div className="flex rounded-md py-3 px-5 w-full gap-4 h-16">
       <div className="flex flex-col justify-center items-center fill-background-10">
@@ -103,71 +111,37 @@ export function TrackerCard({
   tracker,
   device,
   smol = false,
+  interactable = false,
+  outlined = false,
+  onClick,
 }: {
   tracker: TrackerDataT;
   device?: DeviceDataT;
   smol?: boolean;
+  interactable?: boolean;
+  outlined?: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
-  const previousRot = useRef<{ x: number; y: number; z: number; w: number }>(
-    tracker.rotation || { x: 0, y: 0, z: 0, w: 1 }
-  );
-  const [velocity, setVelocity] = useState<number>(0);
-  const [rots, setRotation] = useState<number[]>([]);
+  const { useVelocity } = useTracker(tracker);
 
-  useEffect(() => {
-    if (tracker.rotation) {
-      const rot = QuaternionFromQuatT(tracker.rotation).mul(
-        QuaternionFromQuatT(previousRot.current).inverse()
-      );
-      const dif = Math.min(1, (rot.x ** 2 + rot.y ** 2 + rot.z ** 2) * 2.5);
-      // Use sum of rotation of last 3 frames (0.3sec) for smoother movement and better detection of slow movement.
-      if (rots.length === 3) {
-        rots.shift();
-      }
-      rots.push(dif);
-      setRotation(rots);
-      setVelocity(
-        Math.min(
-          1,
-          Math.max(
-            0,
-            rots.reduce((a, b) => a + b)
-          )
-        )
-      );
-      previousRot.current = tracker.rotation;
-    }
-  }, [tracker.rotation]);
-
-  const trackerName = useMemo(() => {
-    if (tracker.info?.customName) return tracker.info?.customName;
-    if (tracker.info?.bodyPart) return BodyPart[tracker.info?.bodyPart];
-    return tracker.info?.displayName || 'NONE';
-  }, [tracker.info]);
+  const velocity = useVelocity();
 
   return (
-    <TrackerSettings tracker={tracker} device={device}>
-      <div
-        className="bg-background-60 rounded-lg"
-        style={{
-          boxShadow: `0px 0px ${velocity * 8}px ${velocity * 8}px #183951`,
-        }}
-      >
-        {smol && (
-          <TrackerSmol
-            tracker={tracker}
-            device={device}
-            trackerName={trackerName}
-          ></TrackerSmol>
-        )}
-        {!smol && (
-          <TrackerBig
-            tracker={tracker}
-            device={device}
-            trackerName={trackerName}
-          ></TrackerBig>
-        )}
-      </div>
-    </TrackerSettings>
+    // <TrackerSettings tracker={tracker} device={device}>
+    <div
+      onClick={onClick}
+      className={classNames(
+        'bg-background-60 rounded-lg',
+        interactable && 'hover:bg-background-50',
+        outlined && 'outline outline-2 outline-accent-background-40'
+      )}
+      style={{
+        boxShadow: `0px 0px ${velocity * 8}px ${velocity * 8}px #183951`,
+      }}
+    >
+      {smol && <TrackerSmol tracker={tracker} device={device}></TrackerSmol>}
+      {!smol && <TrackerBig tracker={tracker} device={device}></TrackerBig>}
+    </div>
+    // </TrackerSettings>
   );
 }

@@ -16,7 +16,7 @@ import {
   SkeletonResetAllRequestT,
 } from 'solarxr-protocol';
 
-export const bodyPartLabels = {
+export const skeletonBoneLabels = {
   [SkeletonBone.NONE]: 'None',
   [SkeletonBone.HEAD]: 'Head shift',
   [SkeletonBone.NECK]: 'Neck length',
@@ -56,7 +56,7 @@ export function BodyProportions() {
     return (
       config?.skeletonParts.map(({ bone, value }) => ({
         bone,
-        label: bodyPartLabels[bone],
+        label: skeletonBoneLabels[bone],
         value,
       })) || []
     );

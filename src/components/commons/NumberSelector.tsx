@@ -37,7 +37,7 @@ export function NumberSelector({
                 variant="tierciary"
                 rounded
                 onClick={() => onChange(stepFn(value, false))}
-                disabled={stepFn(value, false) <= min}
+                disabled={stepFn(value, false) < min}
               >
                 -
               </Button>
@@ -50,7 +50,7 @@ export function NumberSelector({
                 variant="tierciary"
                 rounded
                 onClick={() => onChange(stepFn(value, true))}
-                disabled={stepFn(value, true) >= max}
+                disabled={stepFn(value, true) > max}
               >
                 +
               </Button>

@@ -5,7 +5,7 @@ import { SlimeVRIcon } from '../../commons/icon/SimevrIcon';
 import { Typography } from '../../commons/Typography';
 
 export function HomePage() {
-  const { applyProgress } = useOnboarding();
+  const { applyProgress, skipSetup } = useOnboarding();
 
   applyProgress(0.1);
 
@@ -20,7 +20,7 @@ export function HomePage() {
       <Button variant="primary" to="/onboarding/wifi-creds">
         Lets get setup!
       </Button>
-      <NavLink to="/">
+      <NavLink to="/" onClick={skipSetup}>
         <Typography color="secondary">Skip setup</Typography>
       </NavLink>
     </div>

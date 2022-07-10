@@ -160,11 +160,11 @@ export function BodyInteractions({
               >
                 <div
                   className={classNames(
-                    'w-5 h-5  rounded-full outline outline-2 outline-background-20 opacity-1 transition-opacity',
+                    'w-5 h-5  rounded-full outline outline-2 outline-background-20 transition-opacity',
                     (assignedRoles.includes((BodyPart as any)[id]) &&
                       'bg-background-70') ||
                       'bg-background-10',
-                    hidden && 'opacity-0'
+                    (hidden && 'opacity-0') || 'opacity-100'
                   )}
                 ></div>
               </div>

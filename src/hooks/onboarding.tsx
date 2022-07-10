@@ -5,6 +5,7 @@ import {
   useEffect,
   useReducer,
 } from 'react';
+import { useConfig } from './config';
 
 type OnboardingAction =
   | { type: 'progress'; value: number }
@@ -19,6 +20,7 @@ export interface OnboardingContext {
   state: OnboardingState;
   applyProgress: (value: number) => void;
   setWifiCredentials: (ssid: string, password: string) => void;
+  skipSetup: () => void;
 }
 
 export function reducer(state: OnboardingState, action: OnboardingAction) {
@@ -39,6 +41,7 @@ export function reducer(state: OnboardingState, action: OnboardingAction) {
 }
 
 export function useProvideOnboarding(): OnboardingContext {
+  const { setConfig } = useConfig();
   const [state, dispatch] = useReducer<
     Reducer<OnboardingState, OnboardingAction>
   >(reducer, {
@@ -55,6 +58,9 @@ export function useProvideOnboarding(): OnboardingContext {
     setWifiCredentials: (ssid: string, password: string) => {
       console.log('ssid', ssid);
       dispatch({ type: 'wifi-creds', ssid, password });
+    },
+    skipSetup: () => {
+      setConfig({ doneOnboarding: true });
     },
   };
 }

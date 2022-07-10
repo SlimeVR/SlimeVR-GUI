@@ -18,7 +18,6 @@ import { SteamIcon } from '../../commons/icon/SteamIcon';
 import { WrenchIcon } from '../../commons/icon/WrenchIcons';
 import { NumberSelector } from '../../commons/NumberSelector';
 import { Radio } from '../../commons/Radio';
-import { Select } from '../../commons/Select';
 import { Typography } from '../../commons/Typography';
 import { SettingsPageLayout } from '../SettingsPageLayout';
 
@@ -209,16 +208,6 @@ export function GeneralSettings() {
             ></Radio>
           </div>
           <div className="flex gap-5 pt-5">
-            {/* <Select
-              {...register('filtering.type')}
-              label="Filtering Type"
-              options={[
-                { label: 'None', value: 0 },
-                { label: 'Interpolation', value: 1 },
-                { label: 'Extrapolation', value: 2 },
-              ]}
-            /> */}
-
             <NumberSelector
               control={control}
               name="filtering.intensity"

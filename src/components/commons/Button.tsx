@@ -3,6 +3,39 @@ import React, { ReactChild, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LoaderIcon } from './icon/LoaderIcon';
 
+function ButtonContent({
+  loading,
+  icon,
+  children,
+}: {
+  loading: boolean;
+  icon?: ReactChild;
+  children: ReactChild;
+}) {
+  return (
+    <>
+      <div
+        className={classNames(
+          { 'opacity-0': loading },
+          'flex flex-row gap-2 justify-center'
+        )}
+      >
+        {icon && (
+          <div className="flex justify-center items-center fill-background-10 w-5 h-5">
+            {icon}
+          </div>
+        )}
+        {children}
+      </div>
+      {loading && (
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center fill-background-10">
+          <LoaderIcon youSpinMeRightRoundBabyRightRound></LoaderIcon>
+        </div>
+      )}
+    </>
+  );
+}
+
 export function Button({
   children,
   variant,
@@ -14,7 +47,7 @@ export function Button({
   rounded = false,
   ...props
 }: {
-  children?: ReactChild;
+  children: ReactChild;
   icon?: ReactChild;
   variant: 'primary' | 'secondary' | 'tierciary';
   to?: string;
@@ -54,36 +87,17 @@ export function Button({
     );
   }, [variant, disabled, rounded]);
 
-  const ButtonContent = () => (
-    <>
-      <div
-        className={classNames(
-          { 'opacity-0': loading },
-          'flex flex-row gap-2 justify-center'
-        )}
-      >
-        {icon && (
-          <div className="flex justify-center items-center fill-background-10 w-5 h-5">
-            {icon}
-          </div>
-        )}
-        {children}
-      </div>
-      {loading && (
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center fill-background-10">
-          <LoaderIcon youSpinMeRightRoundBabyRightRound></LoaderIcon>
-        </div>
-      )}
-    </>
-  );
-
   return to ? (
     <NavLink to={to} className={classes} state={state}>
-      <ButtonContent />
+      <ButtonContent icon={icon} loading={loading}>
+        {children}
+      </ButtonContent>
     </NavLink>
   ) : (
     <button type="button" {...props} className={classes} disabled={disabled}>
-      <ButtonContent />
+      <ButtonContent icon={icon} loading={loading}>
+        {children}
+      </ButtonContent>
     </button>
   );
 }

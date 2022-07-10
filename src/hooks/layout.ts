@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 export function useLayout<T extends HTMLElement>() {
   const [layoutHeight, setLayoutHeigt] = useState(window.innerHeight);
@@ -28,5 +28,33 @@ export function useLayout<T extends HTMLElement>() {
     layoutHeight,
     layoutWidth,
     ref,
+  };
+}
+
+export function useElemHeight<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [height, setHeight] = useState(0);
+
+  const computeHeight = () => {
+    if (ref.current) {
+      setHeight(ref.current?.getBoundingClientRect().height || 0);
+    }
+  };
+
+  const onWindowResize = () => {
+    computeHeight();
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', onWindowResize);
+    computeHeight();
+    return () => {
+      window.removeEventListener('resize', onWindowResize);
+    };
+  });
+
+  return {
+    ref,
+    height,
   };
 }

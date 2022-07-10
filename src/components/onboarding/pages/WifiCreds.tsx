@@ -14,12 +14,12 @@ export interface WifiForm {
 
 export function WifiCredsPage() {
   const navigate = useNavigate();
-  const { applyProgress, state, setWifiCredentials } = useOnboarding();
-  const { register, reset, control, watch, handleSubmit, formState } =
-    useForm<WifiForm>({
-      defaultValues: {},
-      mode: 'onChange',
-    });
+  const { applyProgress, state, setWifiCredentials, skipSetup } =
+    useOnboarding();
+  const { register, reset, handleSubmit, formState } = useForm<WifiForm>({
+    defaultValues: {},
+    mode: 'onChange',
+  });
 
   applyProgress(0.2);
 
@@ -69,18 +69,17 @@ export function WifiCredsPage() {
               label="Password"
               placeholder="Enter password"
             />
-            {/* <CheckBox variant="toggle" label="Tell all nearby trackers to connect with these credentials"></CheckBox> */}
           </div>
         </div>
       </div>
       <div className="w-full py-4 flex flex-row">
         <div className="flex flex-grow">
-          <Button variant="secondary" to="/">
+          <Button variant="secondary" to="/" onClick={skipSetup}>
             Skip setup
           </Button>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary" to="/onboarding/mounting">
+          <Button variant="secondary" to="/onboarding/trackers-assign">
             Don't use WiFi
           </Button>
           <Button type="submit" variant="primary" disabled={!formState.isValid}>

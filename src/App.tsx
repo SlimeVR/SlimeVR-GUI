@@ -25,7 +25,13 @@ import { HomePage } from './components/onboarding/pages/Home';
 import { WifiCredsPage } from './components/onboarding/pages/WifiCreds';
 import { ConnectTrackersPage } from './components/onboarding/pages/ConnectTracker';
 import { OnboardingContextProvider } from './components/onboarding/OnboardingContextProvicer';
-import { MountingPage } from './components/onboarding/pages/mouting/Mounting';
+import { TrackersAssignPage } from './components/onboarding/pages/trackers-assign/Mounting';
+import { EnterVRPage } from './components/onboarding/pages/EnterVR';
+import { AutomaticMountingPage } from './components/onboarding/pages/mounting/AutomaticMounting';
+import { ManualMountingPage } from './components/onboarding/pages/mounting/ManualMounting';
+import { ResetTutorialPage } from './components/onboarding/pages/ResetTutorial';
+import { AutomaticProportionsPage } from './components/onboarding/pages/body-proportions/AutomaticProportions';
+import { ManualProportionsPage } from './components/onboarding/pages/body-proportions/ManualProportions';
 
 function Layout() {
   return (
@@ -71,7 +77,19 @@ function Layout() {
           <Route path="home" element={<HomePage />} />
           <Route path="wifi-creds" element={<WifiCredsPage />} />
           <Route path="connect-trackers" element={<ConnectTrackersPage />} />
-          <Route path="mounting" element={<MountingPage />} />
+          <Route path="trackers-assign" element={<TrackersAssignPage />} />
+          <Route path="enter-vr" element={<EnterVRPage />} />
+          <Route path="mounting/auto" element={<AutomaticMountingPage />} />
+          <Route path="mounting/manual" element={<ManualMountingPage />} />
+          <Route path="reset-tutorial" element={<ResetTutorialPage />} />
+          <Route
+            path="body-proportions/auto"
+            element={<AutomaticProportionsPage />}
+          />
+          <Route
+            path="body-proportions/manual"
+            element={<ManualProportionsPage />}
+          />
         </Route>
         <Route path="*" element={<TopBar></TopBar>}></Route>
       </Routes>

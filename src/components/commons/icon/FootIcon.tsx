@@ -1,8 +1,7 @@
-export function FootIcon() {
+export function FootIcon({ width }: { width?: number }) {
   return (
     <svg
-      width="28"
-      height="28"
+      width={width || 28}
       viewBox="0 0 28 28"
       xmlns="http://www.w3.org/2000/svg"
     >

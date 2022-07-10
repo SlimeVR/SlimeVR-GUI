@@ -12,7 +12,7 @@ import {
 import { useWebsocketAPI } from '../../hooks/websocket-api';
 import { Button } from '../commons/Button';
 import { EmptyModal } from '../commons/Modal';
-import { bodyPartLabels } from './BodyProportions';
+import { skeletonBoneLabels } from './BodyProportions';
 
 export function AutomaticCalibration() {
   const { useRPCPacket, sendRPCPacket } = useWebsocketAPI();
@@ -30,7 +30,7 @@ export function AutomaticCalibration() {
     return (
       skeletonParts?.map(({ bone, value }) => ({
         bone,
-        label: bodyPartLabels[bone],
+        label: skeletonBoneLabels[bone],
         value,
       })) || []
     );

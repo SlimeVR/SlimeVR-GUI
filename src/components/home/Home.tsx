@@ -1,27 +1,12 @@
-import { useMemo } from 'react';
-import { BodyPart } from 'solarxr-protocol';
-import { useAppContext } from '../../hooks/app';
+import { useTrackers } from '../../hooks/tracker';
 import { Typography } from '../commons/Typography';
 import { TrackerCard } from '../tracker/TrackerCard';
 
 export function Home() {
-  const { trackers } = useAppContext();
+  const { useAssignedTrackers, useUnassignedTrackers } = useTrackers();
 
-  const asignedTrackers = useMemo(
-    () =>
-      trackers.filter(({ tracker: { info } }) => {
-        return info && info.bodyPart !== BodyPart.NONE;
-      }),
-    [trackers]
-  );
-
-  const unasignedTrackers = useMemo(
-    () =>
-      trackers.filter(({ tracker: { info } }) => {
-        return info && info.bodyPart === BodyPart.NONE;
-      }),
-    [trackers]
-  );
+  const asignedTrackers = useAssignedTrackers();
+  const unasignedTrackers = useUnassignedTrackers();
 
   return (
     <div className="overflow-y-auto flex flex-col gap-2">
