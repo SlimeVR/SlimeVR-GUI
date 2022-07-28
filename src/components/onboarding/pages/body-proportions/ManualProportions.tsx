@@ -1,6 +1,8 @@
+import { useForm } from 'react-hook-form';
 import { useOnboarding } from '../../../../hooks/onboarding';
 import { ArrowLink } from '../../../commons/ArrowLink';
 import { Button } from '../../../commons/Button';
+import { CheckBox } from '../../../commons/Checkbox';
 import { PersonFrontIcon } from '../../../commons/PersonFrontIcon';
 import { Typography } from '../../../commons/Typography';
 import { BodyProportions } from './BodyProportions';
@@ -9,6 +11,11 @@ export function ManualProportionsPage() {
   const { applyProgress, skipSetup } = useOnboarding();
 
   applyProgress(0.9);
+
+  const { control, watch } = useForm<{ precise: boolean }>({
+    defaultValues: { precise: false },
+  });
+  const { precise } = watch();
 
   return (
     <>
@@ -23,8 +30,14 @@ export function ManualProportionsPage() {
                 <Typography variant="main-title">
                   Manual Body Proportions
                 </Typography>
+                <CheckBox
+                  control={control}
+                  label="Precision adjust"
+                  name="precise"
+                  variant="toggle"
+                ></CheckBox>
               </div>
-              <BodyProportions></BodyProportions>
+              <BodyProportions precise={precise}></BodyProportions>
             </div>
             <div className="flex flex-col flex-grow gap-3 rounded-xl fill-background-50 items-center">
               <PersonFrontIcon width={200}></PersonFrontIcon>
