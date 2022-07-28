@@ -22,7 +22,7 @@ export function Home() {
       <div className="flex px-5 pt-5">
         <Typography variant="section-title">Assigned Trackers</Typography>
       </div>
-      <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-3 sm:grid-cols-1 px-8 my-4">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3  px-8 my-4">
         {asignedTrackers.map(({ tracker, device }, index) => (
           <TrackerCard
             key={index}
@@ -30,6 +30,7 @@ export function Home() {
             device={device}
             onClick={() => sendToSettings(tracker)}
             smol
+            interactable
           />
         ))}
       </div>

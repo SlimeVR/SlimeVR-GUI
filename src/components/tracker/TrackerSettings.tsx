@@ -45,6 +45,7 @@ export function TrackerSettingsPage() {
   }>();
   const { register, watch, reset } = useForm<{ trackerName: string | null }>({
     defaultValues: { trackerName: null },
+    reValidateMode: 'onSubmit',
   });
   const { trackerName } = watch();
 
@@ -86,18 +87,16 @@ export function TrackerSettingsPage() {
 
   useDebouncedEffect(
     () => {
-      if (trackerName == tracker?.tracker.info?.customName) return;
-
       if (!tracker) return;
+      if (trackerName == tracker.tracker.info?.customName) return;
       const assignreq = new AssignTrackerRequestT();
       assignreq.bodyPosition = tracker?.tracker.info?.bodyPart || BodyPart.NONE;
       assignreq.displayName = trackerName;
       assignreq.trackerId = tracker?.tracker.trackerId;
       sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
-      setSelectBodypart(false);
     },
     [trackerName],
-    500
+    1000
   );
 
   useEffect(() => {
@@ -106,6 +105,7 @@ export function TrackerSettingsPage() {
 
   useEffect(() => {
     if (firstLoad) {
+      console.log('hey');
       reset({
         trackerName: tracker?.tracker.info?.customName as string | null,
       });
