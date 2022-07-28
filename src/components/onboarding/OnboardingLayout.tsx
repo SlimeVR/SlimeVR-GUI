@@ -1,13 +1,14 @@
 import { ReactChild } from 'react';
 import { useLayout } from '../../hooks/layout';
 import { useOnboarding } from '../../hooks/onboarding';
+import { MainLayoutRoute } from '../MainLayout';
 import { TopBar } from '../TopBar';
 
 export function OnboardingLayout({ children }: { children: ReactChild }) {
   const { layoutHeight, ref } = useLayout<HTMLDivElement>();
   const { state } = useOnboarding();
 
-  return (
+  return !state.alonePage ? (
     <>
       <TopBar progress={state.progress}></TopBar>
       <div
@@ -18,5 +19,9 @@ export function OnboardingLayout({ children }: { children: ReactChild }) {
         {children}
       </div>
     </>
+  ) : (
+    <MainLayoutRoute widgets={false}>
+      <div className="flex-grow pt-10 mx-4">{children}</div>
+    </MainLayoutRoute>
   );
 }

@@ -113,7 +113,7 @@ export function TrackerSettingsPage() {
   }, [firstLoad]);
 
   return (
-    <form className="h-full">
+    <form className="h-full overflow-y-auto">
       <SingleTrackerBodyAssignmentMenu
         isOpen={selectBodypart}
         onClose={() => setSelectBodypart(false)}
@@ -124,7 +124,7 @@ export function TrackerSettingsPage() {
         onClose={() => setSelectRotation(false)}
         onDirectionSelected={onDirectionSelected}
       ></MountingSelectionMenu>
-      <div className="flex gap-2 md:h-full flex-wrap md:flex-row overflow-y-auto">
+      <div className="flex gap-2 md:h-full flex-wrap md:flex-row ">
         <div className="flex flex-col w-full md:max-w-xs gap-2">
           {tracker && (
             <TrackerCard

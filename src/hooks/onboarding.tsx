@@ -5,15 +5,18 @@ import {
   useEffect,
   useReducer,
 } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { useConfig } from './config';
 
 type OnboardingAction =
   | { type: 'progress'; value: number }
+  | { type: 'alone-page'; value: boolean }
   | { type: 'wifi-creds'; ssid: string; password: string };
 
 interface OnboardingState {
   progress: number;
   wifi?: { ssid: string; password: string };
+  alonePage: boolean;
 }
 
 export interface OnboardingContext {
@@ -35,6 +38,11 @@ export function reducer(state: OnboardingState, action: OnboardingAction) {
         ...state,
         progress: action.value,
       };
+    case 'alone-page':
+      return {
+        ...state,
+        alonePage: action.value,
+      };
     default:
       throw new Error(`unhandled state action ${(action as any).type}`);
   }
@@ -46,7 +54,17 @@ export function useProvideOnboarding(): OnboardingContext {
     Reducer<OnboardingState, OnboardingAction>
   >(reducer, {
     progress: 0,
+    alonePage: false,
   });
+
+  const { state: locatioState } = useLocation();
+
+  useEffect(() => {
+    const typedState: { alonePage?: boolean } = locatioState as any;
+
+    if (typedState.alonePage !== state.alonePage)
+      dispatch({ type: 'alone-page', value: typedState.alonePage || false });
+  }, [locatioState, state]);
 
   return {
     state,
@@ -56,7 +74,6 @@ export function useProvideOnboarding(): OnboardingContext {
       }, []);
     },
     setWifiCredentials: (ssid: string, password: string) => {
-      console.log('ssid', ssid);
       dispatch({ type: 'wifi-creds', ssid, password });
     },
     skipSetup: () => {

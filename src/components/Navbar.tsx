@@ -62,7 +62,12 @@ export function Navbar() {
         <NavButton to="/" icon={<CubeIcon></CubeIcon>}>
           Home
         </NavButton>
-        <NavButton to="/proportions" icon={<GearIcon></GearIcon>}>
+        <NavButton
+          to="/onboarding/body-proportions/auto"
+          match="/onboarding/body-proportions/*"
+          state={{ alonePage: true }}
+          icon={<GearIcon></GearIcon>}
+        >
           Body proportions
         </NavButton>
         <NavButton to="/onboarding/home" icon={<GearIcon></GearIcon>}>

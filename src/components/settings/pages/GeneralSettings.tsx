@@ -184,7 +184,7 @@ export function GeneralSettings() {
             </Typography>
           </div>
           <Typography>Filtering type</Typography>
-          <div className="flex lg:flex-row sm:flex-col gap-3 pt-2">
+          <div className="flex md:flex-row flex-col gap-3 pt-2">
             <Radio
               control={control}
               name="filtering.type"
@@ -207,7 +207,7 @@ export function GeneralSettings() {
               value={FilteringType.EXTRAPOLATION}
             ></Radio>
           </div>
-          <div className="flex gap-5 pt-5">
+          <div className="flex gap-5 pt-5 md:flex-row flex-col">
             <NumberSelector
               control={control}
               name="filtering.intensity"
@@ -241,7 +241,7 @@ export function GeneralSettings() {
               with connected trackers on a more advanced level
             </Typography>
           </div>
-          <div className="grid grid-cols-2 gap-3 pt-3">
+          <div className="grid sm:grid-cols-2 gap-3 pt-3">
             <CheckBox
               variant="toggle"
               control={control}

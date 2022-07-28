@@ -51,7 +51,9 @@ function IncrementButton({
   return (
     <div
       onClick={onClick}
-      className="p-3 bg-background-60 hover:bg-background-50 rounded-lg w-16 h-16 flex flex-col justify-center items-center"
+      className={classNames(
+        'p-3  rounded-lg w-16 h-16 flex flex-col justify-center items-center bg-background-60 hover:bg-opacity-50'
+      )}
     >
       <Typography variant="main-title" bold>
         {children}
@@ -60,7 +62,13 @@ function IncrementButton({
   );
 }
 
-export function BodyProportions({ precise }: { precise: boolean }) {
+export function BodyProportions({
+  precise,
+  variant = 'onboarding',
+}: {
+  precise: boolean;
+  variant: 'onboarding' | 'alone';
+}) {
   const { useRPCPacket, sendRPCPacket } = useWebsocketAPI();
   const [config, setConfig] = useState<Omit<
     SkeletonConfigResponseT,
@@ -159,9 +167,8 @@ export function BodyProportions({ precise }: { precise: boolean }) {
               <div
                 key={bone}
                 className={classNames(
-                  'p-3  rounded-lg h-16 flex w-full items-center justify-between px-6 transition-colors duration-300',
-                  (selectedBone == bone && 'bg-background-60') ||
-                    'bg-background-70'
+                  'p-3  rounded-lg h-16 flex w-full items-center justify-between px-6 transition-colors duration-300 bg-background-60',
+                  (selectedBone == bone && 'opacity-100') || 'opacity-50'
                 )}
               >
                 <Typography variant="section-title" bold>
@@ -200,7 +207,13 @@ export function BodyProportions({ precise }: { precise: boolean }) {
       </div>
 
       <div className="absolute bottom-0 h-20 w-full pointer-events-none">
-        <div className="w-full h-full bg-gradient-to-b from-transparent to-background-80 opacity-100"></div>
+        <div
+          className={classNames(
+            'w-full h-full bg-gradient-to-b from-transparent  opacity-100',
+            variant === 'onboarding' && 'to-background-80',
+            variant === 'alone' && 'to-background-70'
+          )}
+        ></div>
       </div>
     </div>
   );

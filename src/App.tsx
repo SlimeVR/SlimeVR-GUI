@@ -9,7 +9,6 @@ import {
   Outlet,
 } from 'react-router-dom';
 import { Home } from './components/home/Home';
-import { BodyProportions } from './components/proportions/BodyProportions';
 import { AppContextProvider } from './components/providers/AppContext';
 import { useEffect } from 'react';
 import { MainLayoutRoute } from './components/MainLayout';
@@ -43,14 +42,6 @@ function Layout() {
           element={
             <MainLayoutRoute>
               <Home />
-            </MainLayoutRoute>
-          }
-        />
-        <Route
-          path="/proportions"
-          element={
-            <MainLayoutRoute>
-              <BodyProportions />
             </MainLayoutRoute>
           }
         />

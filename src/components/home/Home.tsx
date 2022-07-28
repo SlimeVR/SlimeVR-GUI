@@ -45,7 +45,7 @@ export function Home() {
         </>
         
       } */}
-      {unasignedTrackers.length > 0 && (
+      {/* {unasignedTrackers.length > 0 && (
         <>
           <div className="flex px-5 pt-3">
             <Typography>Unassigned Trackers</Typography>
@@ -56,7 +56,7 @@ export function Home() {
             ))}
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 }

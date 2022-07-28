@@ -10,9 +10,11 @@ import classNames from 'classnames';
 export function MainLayoutRoute({
   children,
   background = true,
+  widgets = true,
 }: {
   children: ReactNode;
   background?: boolean;
+  widgets?: boolean;
 }) {
   const { layoutHeight, ref } = useLayout<HTMLDivElement>();
 
@@ -31,17 +33,19 @@ export function MainLayoutRoute({
             >
               {children}
             </div>
-            <div className="flex flex-col px-4 w-[274px] gap-2 pt-4 rounded-xl overflow-y-auto bg-background-70">
-              <div className="flex">
-                <ResetButton type={ResetType.Quick}></ResetButton>
+            {widgets && (
+              <div className="flex flex-col px-4 w-[274px] gap-2 pt-4 rounded-xl overflow-y-auto bg-background-70">
+                <div className="flex">
+                  <ResetButton type={ResetType.Quick}></ResetButton>
+                </div>
+                <div className="flex">
+                  <ResetButton type={ResetType.Full}></ResetButton>
+                </div>
+                <div className="flex">
+                  <BVHButton></BVHButton>
+                </div>
               </div>
-              <div className="flex">
-                <ResetButton type={ResetType.Full}></ResetButton>
-              </div>
-              <div className="flex">
-                <BVHButton></BVHButton>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
