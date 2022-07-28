@@ -26,6 +26,12 @@ const colors = {
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    screens: {
+      sm: '900px',
+      md: '1100px',
+      lg: '1300px',
+      xl: '1600px',
+    },
     extend: {
       colors: {
         status: {

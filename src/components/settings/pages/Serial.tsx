@@ -11,6 +11,7 @@ import { useLayout } from '../../../hooks/layout';
 import { useWebsocketAPI } from '../../../hooks/websocket-api';
 import { Button } from '../../commons/Button';
 import { Input } from '../../commons/Input';
+import { Typography } from '../../commons/Typography';
 
 export interface WifiForm {
   ssid: string;
@@ -28,7 +29,6 @@ export function Serial() {
   // const consoleRef = useRef<HTMLPreElement>(null);
   const [consoleContent, setConsole] = useState('');
   const [isSerialOpen, setSerialOpen] = useState(false);
-  const { register, handleSubmit } = useForm<WifiForm>({ defaultValues: {} });
 
   useEffect(() => {
     sendRPCPacket(RpcMessage.OpenSerialRequest, new OpenSerialRequestT());
@@ -76,46 +76,26 @@ export function Serial() {
     };
   }, [isSerialOpen, sendRPCPacket]);
 
-  const sendWifiCredentials = (value: WifiForm) => {
-    const wifi = new SetWifiRequestT();
-
-    wifi.password = value.password;
-    wifi.ssid = value.ssid;
-
-    sendRPCPacket(RpcMessage.SetWifiRequest, wifi);
-  };
-
   return (
-    <form
-      className="flex flex-col h-full gap-2 flex-grow bg-background-70 rounded-md overflow-hidden"
-      onSubmit={handleSubmit(sendWifiCredentials)}
-    >
-      <div
-        ref={consoleRef}
-        style={{ height: layoutHeight, width: layoutWidth }}
-        className="overflow-x-auto overflow-y-auto flex select-text"
-      >
-        <pre>
-          {isSerialOpen
-            ? consoleContent
-            : 'Connection to serial lost, Reconnecting...'}
-        </pre>
+    <div className="flex flex-col h-full gap-2 flex-grow bg-background-70 p-5 rounded-md overflow-hidden">
+      <Typography variant="main-title">Serial Console</Typography>
+      <Typography color="secondary">
+        This is a live information feed for serial communication. May be useful
+        if you need to know the firmware is acting up.
+      </Typography>
+      <div className="w-full h-full overflow-x-auto overflow-y-auto bg-background-80 rounded-lg p-3">
+        <div
+          ref={consoleRef}
+          style={{ height: layoutHeight, width: layoutWidth }}
+          className="flex select-text"
+        >
+          <pre>
+            {isSerialOpen
+              ? consoleContent
+              : 'Connection to serial lost, Reconnecting...'}
+          </pre>
+        </div>
       </div>
-      <div className="flex flex-col gap-2 m-4">
-        <Input
-          {...register('ssid', { required: true })}
-          type="text"
-          placeholder="SSID"
-        ></Input>
-        <Input
-          {...register('password', { required: true })}
-          type="password"
-          placeholder="Password"
-        ></Input>
-        <Button variant="primary" type="submit">
-          Send
-        </Button>
-      </div>
-    </form>
+    </div>
   );
 }

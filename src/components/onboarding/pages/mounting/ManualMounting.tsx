@@ -1,11 +1,6 @@
 import { Quaternion } from 'math3d';
 import { useMemo, useState } from 'react';
-import {
-  AssignTrackerRequestT,
-  BodyPart,
-  RpcMessage,
-  TrackerIdT,
-} from 'solarxr-protocol';
+import { AssignTrackerRequestT, BodyPart, RpcMessage } from 'solarxr-protocol';
 import { FlatDeviceTracker } from '../../../../hooks/app';
 import { useOnboarding } from '../../../../hooks/onboarding';
 import { useTrackers } from '../../../../hooks/tracker';

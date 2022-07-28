@@ -5,8 +5,15 @@ import { BVHButton } from './BVHButton';
 import { Navbar } from './Navbar';
 import { ResetButton } from './home/ResetButton';
 import { TopBar } from './TopBar';
+import classNames from 'classnames';
 
-export function MainLayoutRoute({ children }: { children: ReactNode }) {
+export function MainLayoutRoute({
+  children,
+  background = true,
+}: {
+  children: ReactNode;
+  background?: boolean;
+}) {
   const { layoutHeight, ref } = useLayout<HTMLDivElement>();
 
   return (
@@ -16,7 +23,12 @@ export function MainLayoutRoute({ children }: { children: ReactNode }) {
         <div className="flex h-full pb-3">
           <Navbar></Navbar>
           <div className="flex gap-2 mr-3 w-full">
-            <div className="flex flex-grow gap-10 flex-col rounded-xl bg-background-70">
+            <div
+              className={classNames(
+                'flex flex-grow gap-10 flex-col rounded-xl',
+                background && 'bg-background-70'
+              )}
+            >
               {children}
             </div>
             <div className="flex flex-col px-4 w-[274px] gap-2 pt-4 rounded-xl overflow-y-auto bg-background-70">

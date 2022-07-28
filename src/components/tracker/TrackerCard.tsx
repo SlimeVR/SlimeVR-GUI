@@ -1,17 +1,14 @@
-import { MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import {
-  BodyPart,
   DeviceDataT,
   TrackerDataT,
   TrackerStatus as TrackerStatusEnum,
 } from 'solarxr-protocol';
-import { QuaternionFromQuatT } from '../../maths/quaternion';
 import { Typography } from '../commons/Typography';
 import { TrackerBattery } from './TrackerBattery';
 import { TrackerWifi } from './TrackerWifi';
 import { TrackerStatus } from './TrackerStatus';
 import { FootIcon } from '../commons/icon/FootIcon';
-import { TrackerSettings } from './TrackerSettings';
 import classNames from 'classnames';
 import { useTracker } from '../../hooks/tracker';
 
@@ -114,12 +111,14 @@ export function TrackerCard({
   interactable = false,
   outlined = false,
   onClick,
+  bg = 'bg-background-60',
 }: {
   tracker: TrackerDataT;
   device?: DeviceDataT;
   smol?: boolean;
   interactable?: boolean;
   outlined?: boolean;
+  bg?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
   const { useVelocity } = useTracker(tracker);
@@ -127,13 +126,13 @@ export function TrackerCard({
   const velocity = useVelocity();
 
   return (
-    // <TrackerSettings tracker={tracker} device={device}>
     <div
       onClick={onClick}
       className={classNames(
-        'bg-background-60 rounded-lg',
+        'rounded-lg',
         interactable && 'hover:bg-background-50',
-        outlined && 'outline outline-2 outline-accent-background-40'
+        outlined && 'outline outline-2 outline-accent-background-40',
+        bg
       )}
       style={{
         boxShadow: `0px 0px ${velocity * 8}px ${velocity * 8}px #183951`,
@@ -142,6 +141,5 @@ export function TrackerCard({
       {smol && <TrackerSmol tracker={tracker} device={device}></TrackerSmol>}
       {!smol && <TrackerBig tracker={tracker} device={device}></TrackerBig>}
     </div>
-    // </TrackerSettings>
   );
 }

@@ -105,7 +105,6 @@ export function useProvideWebsocketApi(): WebSocketApi {
     data: DataFeedPacketType
   ): void => {
     if (!webSocketRef.current) throw new Error('No connection');
-    console.log('packet ?');
     const fbb = new Builder(1);
 
     const message = new MessageBundleT();

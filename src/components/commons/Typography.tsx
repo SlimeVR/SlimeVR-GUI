@@ -10,7 +10,7 @@ export function Typography({
   variant?: 'main-title' | 'section-title' | 'standard' | 'vr-accessible';
   bold?: boolean;
   block?: boolean;
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | string;
   children: ReactNode;
 }) {
   const tag = useMemo(() => {
@@ -35,6 +35,7 @@ export function Typography({
           (bold ? 'text-vr-accesible-bold' : 'text-vr-accesible'),
         color === 'primary' && 'text-background-10',
         color === 'secondary' && 'text-background-30',
+        typeof color === 'string' && color,
       ]),
     },
     children

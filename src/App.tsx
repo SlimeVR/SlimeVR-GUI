@@ -32,6 +32,7 @@ import { ManualMountingPage } from './components/onboarding/pages/mounting/Manua
 import { ResetTutorialPage } from './components/onboarding/pages/ResetTutorial';
 import { AutomaticProportionsPage } from './components/onboarding/pages/body-proportions/AutomaticProportions';
 import { ManualProportionsPage } from './components/onboarding/pages/body-proportions/ManualProportions';
+import { TrackerSettingsPage } from './components/tracker/TrackerSettings';
 
 function Layout() {
   return (
@@ -50,6 +51,14 @@ function Layout() {
           element={
             <MainLayoutRoute>
               <BodyProportions />
+            </MainLayoutRoute>
+          }
+        />
+        <Route
+          path="/tracker/:trackernum/:deviceid"
+          element={
+            <MainLayoutRoute background={false}>
+              <TrackerSettingsPage />
             </MainLayoutRoute>
           }
         />

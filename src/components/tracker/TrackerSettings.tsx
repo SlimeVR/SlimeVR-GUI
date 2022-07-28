@@ -1,22 +1,24 @@
-import { ReactChild, useMemo, useState } from 'react';
-import { Button } from '../commons/Button';
-import { Select } from '../commons/Select';
-import { useWebsocketAPI } from '../../hooks/websocket-api';
+import { Quaternion } from 'math3d';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  AssignTrackerRequestT,
-  BodyPart,
-  DeviceDataT,
-  RpcMessage,
-  TrackerDataT,
-} from 'solarxr-protocol';
+import { useParams } from 'react-router-dom';
+import { AssignTrackerRequestT, BodyPart, RpcMessage } from 'solarxr-protocol';
+import { useDebouncedEffect } from '../../hooks/timeout';
+import { useTrackerFromId } from '../../hooks/tracker';
+import { useWebsocketAPI } from '../../hooks/websocket-api';
 import {
   FixEuler,
   QuaternionFromQuatT,
   QuaternionToQuatT,
 } from '../../maths/quaternion';
-import { Quaternion } from 'math3d';
-import { EmptyModal } from '../commons/Modal';
+import { ArrowLink } from '../commons/ArrowLink';
+import { Button } from '../commons/Button';
+import { FootIcon } from '../commons/icon/FootIcon';
+import { Input } from '../commons/Input';
+import { Typography } from '../commons/Typography';
+import { MountingSelectionMenu } from '../onboarding/pages/mounting/MountingSelectionMenu';
+import { SingleTrackerBodyAssignmentMenu } from './SingleTrackerBodyAssignmentMenu';
+import { TrackerCard } from './TrackerCard';
 
 const rotationToQuatMap = {
   FRONT: 180,
@@ -25,112 +27,204 @@ const rotationToQuatMap = {
   BACK: 0,
 };
 
-export function TrackerSettings({
-  tracker,
-  device,
-  children,
-}: {
-  tracker: TrackerDataT;
-  device?: DeviceDataT;
-  children: ReactChild;
-}) {
+const rotationsLabels = {
+  [rotationToQuatMap.BACK]: 'Back of the leg',
+  [rotationToQuatMap.FRONT]: 'Front of the leg',
+  [rotationToQuatMap.LEFT]: 'Left of the leg',
+  [rotationToQuatMap.RIGHT]: 'Right of the leg',
+};
+
+export function TrackerSettingsPage() {
   const { sendRPCPacket } = useWebsocketAPI();
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      bodyPosition: 0,
-      mountingRotation: rotationToQuatMap.BACK,
-    },
+  const [firstLoad, setFirstLoad] = useState(false);
+  const [selectRotation, setSelectRotation] = useState<boolean>(false);
+  const [selectBodypart, setSelectBodypart] = useState<boolean>(false);
+  const { trackernum, deviceid } = useParams<{
+    trackernum: string;
+    deviceid: string;
+  }>();
+  const { register, watch, reset } = useForm<{ trackerName: string | null }>({
+    defaultValues: { trackerName: null },
   });
+  const { trackerName } = watch();
 
-  const [open, setOpen] = useState(false);
+  const tracker = useTrackerFromId(trackernum, deviceid);
 
-  const positions = useMemo(
-    () =>
-      Object.keys(BodyPart)
-        .filter((position: string) => isNaN(+position))
-        .map((role, index) => ({ label: role, value: index })),
-    []
-  );
-  const rotations = useMemo(
-    () => [
-      { label: 'FRONT', value: rotationToQuatMap.FRONT },
-      { label: 'LEFT', value: rotationToQuatMap.LEFT },
-      { label: 'RIGHT', value: rotationToQuatMap.RIGHT },
-      { label: 'BACK', value: rotationToQuatMap.BACK },
-    ],
-    []
-  );
+  const onDirectionSelected = (mountingOrientation: number) => {
+    if (!tracker) return;
 
-  const handleSaveSettings = ({
-    bodyPosition,
-    mountingRotation,
-  }: {
-    bodyPosition: number;
-    mountingRotation: number;
-  }) => {
     const assignreq = new AssignTrackerRequestT();
-
-    assignreq.bodyPosition = bodyPosition;
-
     assignreq.mountingRotation = QuaternionToQuatT(
-      Quaternion.Euler(0, +mountingRotation, 0)
+      Quaternion.Euler(0, +mountingOrientation, 0)
     );
-    assignreq.trackerId = tracker.trackerId;
-
+    assignreq.bodyPosition = tracker?.tracker.info?.bodyPart || BodyPart.NONE;
+    assignreq.trackerId = tracker?.tracker.trackerId;
     sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
-    setOpen(false);
+    setSelectRotation(false);
   };
 
-  const openSettings = () => {
-    if (!tracker.info?.editable) return;
+  const onRoleSelected = (role: BodyPart) => {
+    if (!tracker) return;
 
-    setOpen(true);
-    reset({
-      bodyPosition: tracker.info?.bodyPart,
-      mountingRotation: tracker.info?.mountingOrientation
+    const assignreq = new AssignTrackerRequestT();
+    assignreq.bodyPosition = role;
+    assignreq.trackerId = tracker?.tracker.trackerId;
+    sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
+    setSelectBodypart(false);
+  };
+
+  const currRotation = useMemo(
+    () =>
+      tracker?.tracker.info?.mountingOrientation
         ? FixEuler(
-            QuaternionFromQuatT(tracker.info?.mountingOrientation).eulerAngles.y
+            QuaternionFromQuatT(tracker.tracker.info?.mountingOrientation)
+              .eulerAngles.y
           )
         : rotationToQuatMap.BACK,
-    });
-  };
+    [tracker?.tracker.info?.mountingOrientation]
+  );
+
+  useDebouncedEffect(
+    () => {
+      if (trackerName == tracker?.tracker.info?.customName) return;
+
+      if (!tracker) return;
+      const assignreq = new AssignTrackerRequestT();
+      assignreq.bodyPosition = tracker?.tracker.info?.bodyPart || BodyPart.NONE;
+      assignreq.displayName = trackerName;
+      assignreq.trackerId = tracker?.tracker.trackerId;
+      sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
+      setSelectBodypart(false);
+    },
+    [trackerName],
+    500
+  );
+
+  useEffect(() => {
+    if (tracker && !firstLoad) setFirstLoad(true);
+  }, [tracker, firstLoad]);
+
+  useEffect(() => {
+    if (firstLoad) {
+      reset({
+        trackerName: tracker?.tracker.info?.customName as string | null,
+      });
+    }
+  }, [firstLoad]);
 
   return (
-    <>
-      <div onClick={openSettings} className="cursor-pointer">
-        {children}
+    <form className="h-full">
+      <SingleTrackerBodyAssignmentMenu
+        isOpen={selectBodypart}
+        onClose={() => setSelectBodypart(false)}
+        onRoleSelected={onRoleSelected}
+      ></SingleTrackerBodyAssignmentMenu>
+      <MountingSelectionMenu
+        isOpen={selectRotation}
+        onClose={() => setSelectRotation(false)}
+        onDirectionSelected={onDirectionSelected}
+      ></MountingSelectionMenu>
+      <div className="flex gap-2 md:h-full flex-wrap md:flex-row overflow-y-auto">
+        <div className="flex flex-col w-full md:max-w-xs gap-2">
+          {tracker && (
+            <TrackerCard
+              bg={'bg-background-70'}
+              device={tracker?.device}
+              tracker={tracker?.tracker}
+            ></TrackerCard>
+          )}
+          <div className="flex flex-col bg-background-70 p-3 rounded-lg gap-2">
+            <Typography bold>Firmware version</Typography>
+            <div className="flex gap-2">
+              <Typography color="secondary">
+                {tracker?.device?.hardwareInfo?.firmwareVersion}
+              </Typography>
+              <Typography color="secondary">-</Typography>
+              <Typography color="text-accent-background-10">
+                Up to date
+              </Typography>
+            </div>
+            <Button variant="primary" disabled>
+              Update now
+            </Button>
+          </div>
+          <div className="flex flex-col bg-background-70 p-3 rounded-lg gap-2">
+            <div className="flex justify-between">
+              <Typography color="secondary">Manufacturer</Typography>
+              <Typography>
+                {tracker?.device?.hardwareInfo?.manufacturer}
+              </Typography>
+            </div>
+            <div className="flex justify-between">
+              <Typography color="secondary">Display name</Typography>
+              <Typography>{tracker?.tracker.info?.displayName}</Typography>
+            </div>
+            <div className="flex justify-between">
+              <Typography color="secondary">Custom name</Typography>
+              <Typography>
+                {tracker?.tracker.info?.customName || '--'}
+              </Typography>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col flex-grow  bg-background-70 rounded-lg p-5 gap-3">
+          <ArrowLink to="/">Go back to trackers list</ArrowLink>
+          <Typography variant="main-title">Tracker settigns</Typography>
+          <div className="flex flex-col gap-2 w-full mt-3">
+            <Typography variant="section-title">Assignment</Typography>
+            <Typography color="secondary">
+              What part of the body the tracker is assigned to.
+            </Typography>
+            <div className="flex justify-between bg-background-80 w-full p-3 rounded-lg">
+              <div className="flex gap-3 items-center">
+                <FootIcon></FootIcon>
+                <Typography>
+                  {BodyPart[tracker?.tracker.info?.bodyPart || BodyPart.NONE]}
+                </Typography>
+              </div>
+              <div className="flex">
+                <Button
+                  variant="secondary"
+                  onClick={() => setSelectBodypart(true)}
+                >
+                  Edit assignment
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 w-full mt-3">
+            <Typography variant="section-title">Mounting position</Typography>
+            <Typography color="secondary">
+              Where is the tracker mounted?
+            </Typography>
+            <div className="flex justify-between bg-background-80 w-full p-3 rounded-lg">
+              <div className="flex gap-3 items-center">
+                <FootIcon></FootIcon>
+                <Typography>{rotationsLabels[currRotation]}</Typography>
+              </div>
+              <div className="flex">
+                <Button
+                  variant="secondary"
+                  onClick={() => setSelectRotation(true)}
+                >
+                  Edit mounting
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 w-full mt-3">
+            <Typography variant="section-title">Tracker name</Typography>
+            <Typography color="secondary">
+              {'Give it a cute nickname :)'}
+            </Typography>
+            <Input
+              placeholder="NightyBeast's left leg"
+              type="text"
+              {...register('trackerName')}
+            ></Input>
+          </div>
+        </div>
       </div>
-      <EmptyModal isOpen={open} onRequestClose={() => setOpen(false)}>
-        <form
-          onSubmit={handleSubmit(handleSaveSettings)}
-          className="flex flex-col gap-5"
-        >
-          <div className="flex flex-col gap-5">
-            <Select
-              {...register('bodyPosition')}
-              label="Tracker role"
-              options={positions}
-            ></Select>
-            <Select
-              {...register('mountingRotation')}
-              label="Mounting rotation"
-              options={rotations}
-            ></Select>
-          </div>
-          <div className="flex items-center justify-between">
-            <Button variant="primary" type="submit">
-              Save
-            </Button>
-            <Button
-              variant="primary"
-              type="button"
-              onClick={() => setOpen(false)}
-            >
-              Close
-            </Button>
-          </div>
-        </form>
-      </EmptyModal>
-    </>
+    </form>
   );
 }

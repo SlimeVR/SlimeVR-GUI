@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import { MouseEventHandler } from 'react';
 import ReactModal from 'react-modal';
-import { BodyPart } from 'solarxr-protocol';
-import { FlatDeviceTracker } from '../../../../hooks/app';
 import { useElemHeight, useLayout } from '../../../../hooks/layout';
 import { Button } from '../../../commons/Button';
 import { FootIcon } from '../../../commons/icon/FootIcon';
@@ -59,7 +57,7 @@ export function MountingSelectionMenu({
     >
       <div className="flex w-full h-full flex-col ">
         <Typography variant="main-title" bold>
-          Which direction is pointing your tracker?
+          Where do you want this tracker to be?
         </Typography>
         <div
           className="flex w-full flex-col flex-grow items-center gap-3 justify-center"

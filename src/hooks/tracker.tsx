@@ -82,3 +82,24 @@ export function useTracker(tracker: TrackerDataT) {
     },
   };
 }
+
+export function useTrackerFromId(
+  trackerNum: string | number | undefined,
+  deviceId: string | number | undefined
+) {
+  const { trackers } = useAppContext();
+
+  const tracker = useMemo(
+    () =>
+      trackers.find(
+        ({ tracker }) =>
+          trackerNum &&
+          deviceId &&
+          tracker?.trackerId?.trackerNum == trackerNum &&
+          tracker?.trackerId?.deviceId?.id == deviceId
+      ),
+    [trackers, trackerNum, deviceId]
+  );
+
+  return tracker;
+}
