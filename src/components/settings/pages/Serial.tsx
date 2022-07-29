@@ -77,17 +77,20 @@ export function Serial() {
   }, [isSerialOpen, sendRPCPacket]);
 
   return (
-    <div className="flex flex-col h-full gap-2 flex-grow bg-background-70 p-5 rounded-md overflow-hidden">
+    <div className="flex flex-col h-full gap-2 flex-grow bg-background-70 p-5 rounded-md">
       <Typography variant="main-title">Serial Console</Typography>
       <Typography color="secondary">
         This is a live information feed for serial communication. May be useful
         if you need to know the firmware is acting up.
       </Typography>
-      <div className="w-full h-full overflow-x-auto overflow-y-auto bg-background-80 rounded-lg p-3">
+      <div
+        className="w-full bg-background-80 rounded-lg overflow-x-auto overflow-y-auto"
+        ref={consoleRef}
+        style={{ height: layoutHeight }}
+      >
         <div
-          ref={consoleRef}
-          style={{ height: layoutHeight, width: layoutWidth }}
-          className="flex select-text"
+          className="flex select-text "
+          style={{ maxWidth: layoutWidth - 30 }}
         >
           <pre>
             {isSerialOpen
