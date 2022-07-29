@@ -3,6 +3,7 @@ import {
   Reducer,
   useContext,
   useEffect,
+  useLayoutEffect,
   useReducer,
 } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -59,17 +60,18 @@ export function useProvideOnboarding(): OnboardingContext {
 
   const { state: locatioState } = useLocation();
 
-  useEffect(() => {
-    const typedState: { alonePage?: boolean } = locatioState as any;
+  useLayoutEffect(() => {
+    const { alonePage = false }: { alonePage?: boolean } =
+      (locatioState as any) || {};
 
-    if (typedState.alonePage !== state.alonePage)
-      dispatch({ type: 'alone-page', value: typedState.alonePage || false });
+    if (alonePage !== state.alonePage)
+      dispatch({ type: 'alone-page', value: alonePage });
   }, [locatioState, state]);
 
   return {
     state,
     applyProgress: (value: number) => {
-      useEffect(() => {
+      useLayoutEffect(() => {
         dispatch({ type: 'progress', value });
       }, []);
     },

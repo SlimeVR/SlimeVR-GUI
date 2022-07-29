@@ -1,5 +1,12 @@
 import classNames from 'classnames';
-import { ReactChild, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ReactChild,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { BodyPart } from 'solarxr-protocol';
 import { PersonFrontIcon } from './PersonFrontIcon';
 
@@ -63,7 +70,7 @@ export function BodyInteractions({
     };
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
       !(
         personRef.current &&
@@ -147,7 +154,7 @@ export function BodyInteractions({
           ref={personRef}
           className="relative w-full flex justify-center mx-10"
         >
-          <PersonFrontIcon></PersonFrontIcon>
+          <PersonFrontIcon width={240}></PersonFrontIcon>
           {slotsButtonsPos.map(
             ({ top, left, height, width, id, hidden, buttonOffset }) => (
               <div

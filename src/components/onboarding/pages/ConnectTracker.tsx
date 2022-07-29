@@ -213,7 +213,7 @@ export function ConnectTrackersPage() {
             </Button>
           </div>
           <div className="flex gap-3">
-            <Button variant="primary" to="/onboarding/mounting">
+            <Button variant="primary" to="/onboarding/mounting/auto">
               I connected all my trackers
             </Button>
           </div>

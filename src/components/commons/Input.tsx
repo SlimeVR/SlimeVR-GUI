@@ -11,10 +11,11 @@ export interface InputProps {
   type: HTMLInputTypeAttribute;
   placeholder?: string;
   label?: string;
+  autocomplete?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function AppInput(
-  { type, placeholder, label, ...props },
+  { type, placeholder, label, autocomplete, ...props },
   ref
 ) {
   const [forceText, setForceText] = useState(false);
@@ -36,6 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function AppInput(
             { 'pr-10': type === 'password' }
           )}
           placeholder={placeholder}
+          autoComplete={autocomplete ? 'off' : 'on'}
           {...props}
         ></input>
         {type === 'password' && (

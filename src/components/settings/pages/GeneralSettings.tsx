@@ -118,7 +118,7 @@ export function GeneralSettings() {
   }, [state]);
 
   return (
-    <form className="flex flex-col gap-3" ref={pageRef}>
+    <form className="flex flex-col gap-2 w-full" ref={pageRef}>
       <SettingsPageLayout icon={<SteamIcon></SteamIcon>} id="steamvr">
         <>
           <Typography variant="main-title">SteamVR</Typography>

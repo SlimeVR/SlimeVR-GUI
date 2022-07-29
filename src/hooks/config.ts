@@ -20,28 +20,32 @@ export interface ConfigContext {
   loadConfig: () => Promise<Config>;
 }
 
+const initialConfig = { doneOnboarding: false };
+
 export function useConfigProvider(): ConfigContext {
   const [currConfig, set] = useState<Config | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const setConfig = async (config: Partial<Config>) => {
+    const newConfig = config
+      ? {
+          ...currConfig,
+          ...config,
+        }
+      : null;
+    set(newConfig as Config);
+
+    await createDir('', { dir: BaseDirectory.App, recursive: true });
+    await writeFile(
+      { contents: JSON.stringify(newConfig), path: 'config.json' },
+      { dir: BaseDirectory.App }
+    );
+  };
+
   return {
     config: currConfig,
     loading,
-    setConfig: async (config: Partial<Config>) => {
-      const newConfig = config
-        ? {
-            ...currConfig,
-            ...config,
-          }
-        : null;
-      set(newConfig as Config);
-
-      await createDir('', { dir: BaseDirectory.App, recursive: true });
-      await writeFile(
-        { contents: JSON.stringify(newConfig), path: 'config.json' },
-        { dir: BaseDirectory.App }
-      );
-    },
+    setConfig,
     loadConfig: async () => {
       setLoading(true);
       try {
@@ -56,6 +60,7 @@ export function useConfigProvider(): ConfigContext {
         return loadedConfig;
       } catch (e) {
         console.log(e);
+        setConfig(initialConfig);
         setLoading(false);
         return null;
       }

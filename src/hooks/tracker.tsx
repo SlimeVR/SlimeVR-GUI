@@ -43,6 +43,17 @@ export function useTracker(tracker: TrackerDataT) {
         if (tracker.info?.bodyPart) return BodyPart[tracker.info?.bodyPart];
         return tracker.info?.displayName || 'NONE';
       }, [tracker.info]),
+    useRotation: () =>
+      useMemo(
+        () =>
+          QuaternionFromQuatT({
+            x: tracker.rotation?.x || 0,
+            y: tracker.rotation?.y || 0,
+            z: tracker.rotation?.z || 0,
+            w: tracker.rotation?.w || 1,
+          }).eulerAngles,
+        [tracker.rotation]
+      ),
     useVelocity: () => {
       const previousRot = useRef<{
         x: number;

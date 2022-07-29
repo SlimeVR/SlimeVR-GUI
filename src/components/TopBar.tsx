@@ -7,6 +7,7 @@ import { SlimeVRIcon } from './commons/icon/SimevrIcon';
 import { appWindow } from '@tauri-apps/api/window';
 import { ProgressBar } from './commons/ProgressBar';
 import { Typography } from './commons/Typography';
+import packagejson from '../../package.json';
 
 export function TopBar({
   progress,
@@ -35,7 +36,7 @@ export function TopBar({
             className="mx-2 flex justify-around flex-col text-standard-bold text-status-success bg-status-success bg-opacity-20 rounded-lg px-3"
             data-tauri-drag-region
           >
-            v1.5.2
+            v{packagejson.version}
           </div>
         </div>
       </div>

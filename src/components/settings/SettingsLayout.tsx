@@ -11,11 +11,11 @@ export function SettingsLayoutRoute({ children }: { children: ReactChild }) {
     <>
       <TopBar></TopBar>
       <div ref={ref} className="flex-grow" style={{ height: layoutHeight }}>
-        <div className="flex h-full pb-4">
+        <div className="flex h-full pb-3">
           <Navbar></Navbar>
-          <div className="h-full w-full gap-3 grid grid-flow-col">
+          <div className="h-full w-full gap-2 flex">
             <SettingsSidebar></SettingsSidebar>
-            <div className="w-full flex flex-col overflow-y-auto pr-4">
+            <div className="w-full flex flex-col overflow-y-auto pr-2">
               {children}
             </div>
           </div>

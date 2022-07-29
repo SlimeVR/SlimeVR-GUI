@@ -28,10 +28,10 @@ const rotationToQuatMap = {
 };
 
 const rotationsLabels = {
-  [rotationToQuatMap.BACK]: 'Back of the leg',
-  [rotationToQuatMap.FRONT]: 'Front of the leg',
-  [rotationToQuatMap.LEFT]: 'Left of the leg',
-  [rotationToQuatMap.RIGHT]: 'Right of the leg',
+  [rotationToQuatMap.BACK]: 'Back',
+  [rotationToQuatMap.FRONT]: 'Front',
+  [rotationToQuatMap.LEFT]: 'Left',
+  [rotationToQuatMap.RIGHT]: 'Right',
 };
 
 export function TrackerSettingsPage() {
@@ -131,6 +131,7 @@ export function TrackerSettingsPage() {
               bg={'bg-background-70'}
               device={tracker?.device}
               tracker={tracker?.tracker}
+              shakeHighlight={false}
             ></TrackerCard>
           )}
           <div className="flex flex-col bg-background-70 p-3 rounded-lg gap-2">
@@ -220,6 +221,7 @@ export function TrackerSettingsPage() {
             <Input
               placeholder="NightyBeast's left leg"
               type="text"
+              autocomplete={false}
               {...register('trackerName')}
             ></Input>
           </div>

@@ -26,9 +26,9 @@ export function EnterVRPage() {
                 Put on all your trackers and then enter VR!
               </Typography>
             </div>
-            <div className="flex flex-col flex-grow gap-3 rounded-xl fill-background-50">
+            {/* <div className="flex flex-col flex-grow gap-3 rounded-xl fill-background-50">
               <Typography variant="main-title">Illustration HERE</Typography>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="w-full py-4 flex flex-row">

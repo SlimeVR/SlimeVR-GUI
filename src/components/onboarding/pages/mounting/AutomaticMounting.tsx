@@ -4,7 +4,7 @@ import { Button } from '../../../commons/Button';
 import { Typography } from '../../../commons/Typography';
 
 export function AutomaticMountingPage() {
-  const { applyProgress, skipSetup } = useOnboarding();
+  const { applyProgress, skipSetup, state } = useOnboarding();
 
   applyProgress(0.7);
 
@@ -14,9 +14,11 @@ export function AutomaticMountingPage() {
         <div className="flex flex-col w-full h-full justify-center px-20">
           <div className="flex gap-8">
             <div className="flex flex-col max-w-md gap-3">
-              <ArrowLink to="/onboarding/enter-vr" direction="left">
-                Go Back to Enter VR
-              </ArrowLink>
+              {!state.alonePage && (
+                <ArrowLink to="/onboarding/enter-vr" direction="left">
+                  Go Back to Enter VR
+                </ArrowLink>
+              )}
               <Typography variant="main-title">
                 Mount calibration!{' '}
                 <span className="p-1 bg-accent-background-30 text-standard rounded-md">
@@ -31,17 +33,25 @@ export function AutomaticMountingPage() {
         </div>
         <div className="w-full py-4 flex flex-row">
           <div className="flex flex-grow">
-            <Button variant="secondary" to="/" onClick={skipSetup}>
-              Skip setup
-            </Button>
+            {!state.alonePage && (
+              <Button variant="secondary" to="/" onClick={skipSetup}>
+                Skip setup
+              </Button>
+            )}
           </div>
           <div className="flex gap-3">
-            <Button variant="secondary" to="/onboarding/mounting/manual">
+            <Button
+              variant="secondary"
+              state={{ alonePage: state.alonePage }}
+              to="/onboarding/mounting/manual"
+            >
               Manually set mounting
             </Button>
-            <Button variant="primary" to="/onboarding/reset-tutorial">
-              Next step
-            </Button>
+            {!state.alonePage && (
+              <Button variant="primary" to="/onboarding/reset-tutorial">
+                Next step
+              </Button>
+            )}
           </div>
         </div>
       </div>

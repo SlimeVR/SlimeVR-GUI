@@ -26,7 +26,7 @@ export function NavButton({
       to={to}
       state={state}
       className={classnames(
-        'flex flex-col justify-center gap-4 w-[75px] h-[75px] rounded-md group select-text',
+        'flex flex-col justify-center gap-4 w-[85px] h-[85px] rounded-md group select-text',
         {
           'bg-accent-background-50 fill-accent-background-20': doesMatch,
           'hover:bg-background-70': !doesMatch,
@@ -57,7 +57,7 @@ export function NavButton({
 
 export function Navbar() {
   return (
-    <div data-tauri-drag-region className="flex flex-col p-2 px-4">
+    <div data-tauri-drag-region className="flex flex-col px-2 pt-2">
       <div className="flex flex-col flex-grow gap-2">
         <NavButton to="/" icon={<CubeIcon></CubeIcon>}>
           Home
@@ -69,6 +69,21 @@ export function Navbar() {
           icon={<GearIcon></GearIcon>}
         >
           Body proportions
+        </NavButton>
+        <NavButton
+          to="/onboarding/trackers-assign"
+          state={{ alonePage: true }}
+          icon={<GearIcon></GearIcon>}
+        >
+          Tracker assignment
+        </NavButton>
+        <NavButton
+          to="/onboarding/mounting/auto"
+          match="/onboarding/mounting/*"
+          state={{ alonePage: true }}
+          icon={<GearIcon></GearIcon>}
+        >
+          Mounting Calibration
         </NavButton>
         <NavButton to="/onboarding/home" icon={<GearIcon></GearIcon>}>
           Setup Wizard

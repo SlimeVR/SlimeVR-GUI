@@ -4,6 +4,7 @@ import {
   Reducer,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useReducer,
 } from 'react';
@@ -83,7 +84,7 @@ export function useProvideAppContext(): AppContext {
     }
   }, [isConnected]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (config && !config.doneOnboarding) {
       navigate('/onboarding/home');
     }

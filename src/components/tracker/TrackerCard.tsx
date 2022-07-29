@@ -112,6 +112,7 @@ export function TrackerCard({
   outlined = false,
   onClick,
   bg = 'bg-background-60',
+  shakeHighlight = true,
 }: {
   tracker: TrackerDataT;
   device?: DeviceDataT;
@@ -119,6 +120,7 @@ export function TrackerCard({
   interactable?: boolean;
   outlined?: boolean;
   bg?: string;
+  shakeHighlight?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
   const { useVelocity } = useTracker(tracker);
@@ -134,9 +136,13 @@ export function TrackerCard({
         outlined && 'outline outline-2 outline-accent-background-40',
         bg
       )}
-      style={{
-        boxShadow: `0px 0px ${velocity * 8}px ${velocity * 8}px #183951`,
-      }}
+      style={
+        shakeHighlight
+          ? {
+              boxShadow: `0px 0px ${velocity * 8}px ${velocity * 8}px #183951`,
+            }
+          : {}
+      }
     >
       {smol && <TrackerSmol tracker={tracker} device={device}></TrackerSmol>}
       {!smol && <TrackerBig tracker={tracker} device={device}></TrackerBig>}

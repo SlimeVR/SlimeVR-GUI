@@ -24,7 +24,7 @@ import { HomePage } from './components/onboarding/pages/Home';
 import { WifiCredsPage } from './components/onboarding/pages/WifiCreds';
 import { ConnectTrackersPage } from './components/onboarding/pages/ConnectTracker';
 import { OnboardingContextProvider } from './components/onboarding/OnboardingContextProvicer';
-import { TrackersAssignPage } from './components/onboarding/pages/trackers-assign/Mounting';
+import { TrackersAssignPage } from './components/onboarding/pages/trackers-assign/TrackerAssignment';
 import { EnterVRPage } from './components/onboarding/pages/EnterVR';
 import { AutomaticMountingPage } from './components/onboarding/pages/mounting/AutomaticMounting';
 import { ManualMountingPage } from './components/onboarding/pages/mounting/ManualMounting';
@@ -32,6 +32,7 @@ import { ResetTutorialPage } from './components/onboarding/pages/ResetTutorial';
 import { AutomaticProportionsPage } from './components/onboarding/pages/body-proportions/AutomaticProportions';
 import { ManualProportionsPage } from './components/onboarding/pages/body-proportions/ManualProportions';
 import { TrackerSettingsPage } from './components/tracker/TrackerSettings';
+import { DonePage } from './components/onboarding/pages/Done';
 
 function Layout() {
   return (
@@ -90,6 +91,7 @@ function Layout() {
             path="body-proportions/manual"
             element={<ManualProportionsPage />}
           />
+          <Route path="done" element={<DonePage />} />
         </Route>
         <Route path="*" element={<TopBar></TopBar>}></Route>
       </Routes>

@@ -14,7 +14,7 @@ export function ResetTutorialPage() {
         <div className="flex flex-col w-full h-full justify-center px-20">
           <div className="flex gap-8">
             <div className="flex flex-col max-w-md gap-3">
-              <ArrowLink to="/onboarding/enter-vr" direction="left">
+              <ArrowLink to="/onboarding/mounting/auto" direction="left">
                 Go Back to Mounting calibration
               </ArrowLink>
               <Typography variant="main-title">

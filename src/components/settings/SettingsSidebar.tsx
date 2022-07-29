@@ -40,7 +40,7 @@ export function SettingsLink({
 
 export function SettingsSidebar() {
   return (
-    <div className="flex flex-col px-5 min-w-[280px] py-5 gap-3 overflow-y-auto bg-background-70 rounded-lg">
+    <div className="flex flex-col px-5 w-[280px] min-w-[280px] py-5 gap-3 overflow-y-auto bg-background-70 rounded-lg">
       <Typography variant="main-title">Settings</Typography>
       <div className="flex flex-col gap-3">
         <Typography variant="section-title">General</Typography>

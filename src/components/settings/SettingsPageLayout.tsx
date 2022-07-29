@@ -13,7 +13,7 @@ export function SettingsPageLayout({
   return (
     <div
       className={classNames(
-        'bg-background-70 rounded-lg p-8 flex gap-8',
+        'bg-background-70 rounded-lg p-8 flex gap-8 w-full',
         className
       )}
       {...props}
