@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import { ReactChild } from 'react';
+import { MouseEventHandler, ReactChild, useEffect, useState } from 'react';
 import {
   TrackerDataT,
+  TrackerIdT,
   TrackerStatus as TrackerStatusEnum,
 } from 'solarxr-protocol';
 import { FlatDeviceTracker } from '../../hooks/app';
@@ -47,16 +48,28 @@ export function TrackerRotCol({ tracker }: { tracker: TrackerDataT }) {
 export function RowContainer({
   children,
   rounded = 'none',
+  hover,
+  onClick,
+  onMouseOver,
+  onMouseOut,
 }: {
   children: ReactChild;
   rounded?: 'left' | 'right' | 'none';
+  hover: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  onMouseOver?: MouseEventHandler<HTMLDivElement>;
+  onMouseOut?: MouseEventHandler<HTMLDivElement>;
 }) {
   return (
     <div
+      onClick={onClick}
+      onMouseEnter={onMouseOver}
+      onMouseLeave={onMouseOut}
       className={classNames(
-        'h-14 bg-background-60 flex flex-col justify-center px-3',
+        'h-14  flex flex-col justify-center px-3',
         rounded === 'left' && 'rounded-l-lg',
-        rounded === 'right' && 'rounded-r-lg'
+        rounded === 'right' && 'rounded-r-lg',
+        hover ? 'bg-background-50' : 'bg-background-60'
       )}
     >
       {children}
@@ -66,23 +79,44 @@ export function RowContainer({
 
 export function TrackersTable({
   flatTrackers,
+  clickedTracker,
 }: {
+  clickedTracker: (tracker: TrackerDataT) => void;
   flatTrackers: FlatDeviceTracker[];
 }) {
+  const [hoverTracker, setHoverTracker] = useState<TrackerIdT | null>(null);
+
+  const trackerEqual = (id: TrackerIdT | null) =>
+    id?.trackerNum == hoverTracker?.trackerNum &&
+    (!id?.deviceId || id.deviceId.id == hoverTracker?.deviceId?.id);
+
   return (
     <div className="flex w-full overflow-x-auto py-2">
       <div className="flex flex-col gap-2">
         <div className="flex px-3">Tracker</div>
         {flatTrackers.map(({ tracker }, index) => (
-          <RowContainer key={index} rounded="left">
+          <RowContainer
+            key={index}
+            rounded="left"
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             <TrackerNameCol tracker={tracker}></TrackerNameCol>
           </RowContainer>
         ))}
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex px-3">Type</div>
-        {flatTrackers.map(({ device }, index) => (
-          <RowContainer key={index}>
+        {flatTrackers.map(({ device, tracker }, index) => (
+          <RowContainer
+            key={index}
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             <Typography color="secondary">
               {device?.hardwareInfo?.manufacturer || '--'}
             </Typography>
@@ -92,7 +126,13 @@ export function TrackersTable({
       <div className="flex flex-col gap-2">
         <div className="flex px-3">Battery</div>
         {flatTrackers.map(({ device, tracker }, index) => (
-          <RowContainer key={index}>
+          <RowContainer
+            key={index}
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             {(device &&
               device.hardwareStatus &&
               device.hardwareStatus.batteryPctEstimate && (
@@ -107,7 +147,13 @@ export function TrackersTable({
       <div className="flex flex-col gap-2">
         <div className="flex px-3">Ping</div>
         {flatTrackers.map(({ device, tracker }, index) => (
-          <RowContainer key={index}>
+          <RowContainer
+            key={index}
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             {(device &&
               device.hardwareStatus &&
               device.hardwareStatus.rssi &&
@@ -124,7 +170,13 @@ export function TrackersTable({
       <div className="flex flex-col gap-2">
         <div className="flex px-3 whitespace-nowrap">Rotation X/Y/Z</div>
         {flatTrackers.map(({ tracker }, index) => (
-          <RowContainer key={index}>
+          <RowContainer
+            key={index}
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             <TrackerRotCol tracker={tracker} />
           </RowContainer>
         ))}
@@ -132,7 +184,13 @@ export function TrackersTable({
       <div className="flex flex-col gap-2">
         <div className="flex px-3 whitespace-nowrap">Position X/Y/Z</div>
         {flatTrackers.map(({ tracker }, index) => (
-          <RowContainer key={index}>
+          <RowContainer
+            key={index}
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             <Typography color="secondary">
               <span className="whitespace-nowrap">
                 {`${tracker.position?.x.toFixed(
@@ -147,8 +205,15 @@ export function TrackersTable({
       </div>
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex px-3">URL</div>
-        {flatTrackers.map(({ device }, index) => (
-          <RowContainer key={index} rounded="right">
+        {flatTrackers.map(({ device, tracker }, index) => (
+          <RowContainer
+            key={index}
+            rounded="right"
+            onClick={() => clickedTracker(tracker)}
+            hover={trackerEqual(tracker.trackerId)}
+            onMouseOver={() => setHoverTracker(tracker.trackerId)}
+            onMouseOut={() => setHoverTracker(null)}
+          >
             <Typography color="secondary">{device?.customName}</Typography>
           </RowContainer>
         ))}

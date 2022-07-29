@@ -45,7 +45,10 @@ export function Home() {
       )}
       {config?.debug && (
         <div className="flex px-5 pt-5 justify-center  overflow-x-auto">
-          <TrackersTable flatTrackers={asignedTrackers}></TrackersTable>
+          <TrackersTable
+            flatTrackers={asignedTrackers}
+            clickedTracker={(tracker) => sendToSettings(tracker)}
+          ></TrackersTable>
         </div>
       )}
     </div>
