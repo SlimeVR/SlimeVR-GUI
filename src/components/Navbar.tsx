@@ -45,8 +45,8 @@ export function NavButton({
       </div>
       <div
         className={classnames('text-center', {
-          'text-purple-gray-100': doesMatch,
-          'text-purple-gray-300': !doesMatch,
+          'text-accent-background-10': doesMatch,
+          'text-background-10': !doesMatch,
         })}
       >
         {children}

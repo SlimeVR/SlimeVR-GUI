@@ -16,7 +16,7 @@ export function TopBar({
   progress?: number;
 }) {
   return (
-    <div data-tauri-drag-region className="flex gap-2 h-[38px]  z-50">
+    <div data-tauri-drag-region className="flex gap-2 h-[38px] z-50">
       <div
         className="flex px-2 pb-1 mt-3 justify-around z-50"
         data-tauri-drag-region
@@ -41,7 +41,7 @@ export function TopBar({
         </div>
       </div>
       <div
-        className="flex flex-grow items-center h-full justify-center  z-50"
+        className="flex flex-grow items-center h-full justify-center z-50"
         data-tauri-drag-region
       >
         <div
@@ -55,22 +55,22 @@ export function TopBar({
       </div>
       <div className="flex justify-end px-2 gap-2 z-50" data-tauri-drag-region>
         <div
-          className="flex flex-col justify-around "
+          className="flex flex-col justify-around"
           onClick={() => appWindow.minimize()}
         >
-          <MinimiseIcon className="rounded-full hover:bg-purple-gray-700"></MinimiseIcon>
+          <MinimiseIcon className="rounded-full"></MinimiseIcon>
         </div>
         <div
-          className="flex flex-col justify-around "
+          className="flex flex-col justify-around"
           onClick={() => appWindow.toggleMaximize()}
         >
-          <MaximiseIcon className="rounded-full hover:bg-purple-gray-700"></MaximiseIcon>
+          <MaximiseIcon className="rounded-full"></MaximiseIcon>
         </div>
         <div
-          className="flex flex-col justify-around "
+          className="flex flex-col justify-around"
           onClick={() => appWindow.close()}
         >
-          <CloseIcon className="rounded-full hover:bg-purple-gray-700"></CloseIcon>
+          <CloseIcon className="rounded-full"></CloseIcon>
         </div>
       </div>
     </div>

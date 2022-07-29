@@ -80,7 +80,7 @@ export function WifiCredsPage() {
         </div>
         <div className="flex gap-3">
           <Button variant="secondary" to="/onboarding/trackers-assign">
-            Don't use WiFi
+            Skip wifi settings
           </Button>
           <Button type="submit" variant="primary" disabled={!formState.isValid}>
             Submit!
