@@ -88,7 +88,7 @@ export function ManualMountingPage() {
             </div>
           </div>
         </div>
-        <div className="w-full py-4 flex flex-row">
+        <div className="w-full pb-4 flex flex-row">
           <div className="flex flex-grow">
             {!state.alonePage && (
               <Button variant="secondary" to="/" onClick={skipSetup}>

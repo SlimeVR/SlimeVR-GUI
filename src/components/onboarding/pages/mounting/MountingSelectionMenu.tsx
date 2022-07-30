@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { MouseEventHandler } from 'react';
 import ReactModal from 'react-modal';
-import { useElemHeight, useLayout } from '../../../../hooks/layout';
+import { useElemSize, useLayout } from '../../../../hooks/layout';
 import { Button } from '../../../commons/Button';
 import { FootIcon } from '../../../commons/icon/FootIcon';
 import { Typography } from '../../../commons/Typography';
@@ -40,7 +40,7 @@ export function MountingSelectionMenu({
   const { ref: refTrackers, layoutHeight: trackersHeight } =
     useLayout<HTMLDivElement>();
   const { ref: refOptions, height: optionsHeight } =
-    useElemHeight<HTMLDivElement>();
+    useElemSize<HTMLDivElement>();
 
   return (
     <ReactModal

@@ -32,7 +32,7 @@ export function MainLayoutRoute({
           >
             <div
               className={classNames(
-                'flex flex-col rounded-xl w-full overflow-x-auto',
+                'flex flex-col rounded-xl w-full overflow-hidden',
                 background && 'bg-background-70'
               )}
             >

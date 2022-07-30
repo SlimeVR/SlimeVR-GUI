@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import ReactModal from 'react-modal';
 import { BodyPart } from 'solarxr-protocol';
 import { FlatDeviceTracker } from '../../../../hooks/app';
-import { useElemHeight, useLayout } from '../../../../hooks/layout';
+import { useElemSize, useLayout } from '../../../../hooks/layout';
 import { useTrackers } from '../../../../hooks/tracker';
 import { Button } from '../../../commons/Button';
 import { TipBox } from '../../../commons/TipBox';
@@ -23,7 +23,7 @@ export function TrackerSelectionMenu({
   const { ref: refTrackers, layoutHeight: trackersHeight } =
     useLayout<HTMLDivElement>();
   const { ref: refOptions, height: optionsHeight } =
-    useElemHeight<HTMLDivElement>();
+    useElemSize<HTMLDivElement>();
 
   const { useAssignedTrackers, useUnassignedTrackers } = useTrackers();
 

@@ -1,4 +1,12 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  MutableRefObject,
+  Ref,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 export function useLayout<T extends HTMLElement>() {
   const [layoutHeight, setLayoutHeigt] = useState(window.innerHeight);
@@ -31,30 +39,36 @@ export function useLayout<T extends HTMLElement>() {
   };
 }
 
-export function useElemHeight<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
+export function useElemSize<T extends HTMLElement>(
+  forwardRef?: MutableRefObject<T | null>
+) {
+  const innerRef = useRef<T | null>(null);
+  const ref = forwardRef || innerRef;
   const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
 
-  const computeHeight = () => {
+  const observer = useRef(
+    new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      setWidth(width);
+      setHeight(height);
+    })
+  );
+
+  useEffect(() => {
     if (ref.current) {
-      setHeight(ref.current?.getBoundingClientRect().height || 0);
+      observer.current.observe(ref.current);
     }
-  };
 
-  const onWindowResize = () => {
-    computeHeight();
-  };
-
-  useLayoutEffect(() => {
-    window.addEventListener('resize', onWindowResize);
-    computeHeight();
     return () => {
-      window.removeEventListener('resize', onWindowResize);
+      if (!ref.current) return;
+      observer.current.unobserve(ref.current);
     };
-  });
+  }, [ref, observer]);
 
   return {
     ref,
     height,
+    width,
   };
 }

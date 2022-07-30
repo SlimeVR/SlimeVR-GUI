@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { MouseEventHandler, ReactChild, useEffect, useState } from 'react';
+import { MouseEventHandler, ReactChild, useState } from 'react';
 import {
   TrackerDataT,
   TrackerIdT,

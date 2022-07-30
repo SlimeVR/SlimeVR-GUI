@@ -6,7 +6,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useForm } from 'react-hook-form';
 import {
   ChangeSkeletonConfigRequestT,
   RpcMessage,
@@ -15,7 +14,6 @@ import {
   SkeletonConfigResponseT,
 } from 'solarxr-protocol';
 import { useWebsocketAPI } from '../../../../hooks/websocket-api';
-import { CheckBox } from '../../../commons/Checkbox';
 import { Typography } from '../../../commons/Typography';
 
 export const skeletonBoneLabels = {
