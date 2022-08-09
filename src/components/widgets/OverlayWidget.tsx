@@ -25,8 +25,6 @@ export function OverlayWidget() {
   useRPCPacket(
     RpcMessage.OverlayDisplayModeResponse,
     (res: OverlayDisplayModeResponseT) => {
-      console.log(res);
-
       reset({
         isMirrored: res.isMirrored,
         isVisible: res.isVisible,
