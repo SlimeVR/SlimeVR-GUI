@@ -6,7 +6,9 @@ import {
   FilteringSettingsT,
   FilteringType,
   ModelSettings,
+  ModelSettingsT,
   ModelToggles,
+  ModelTogglesT,
   RpcMessage,
   SettingsRequestT,
   SettingsResponseT,
@@ -83,11 +85,13 @@ export function GeneralSettings() {
       settings.steamVrTrackers = trackers;
     }
 
-    const toggles = new ModelToggles();
+    const modelSettings = new ModelSettingsT();
+    const toggles = new ModelTogglesT();
     toggles.floorClip = values.toggles.floorClip;
     toggles.skatingCorrection = values.toggles.skatingCorrection;
+    modelSettings.toggles = toggles;
 
-    settings.modelSettings = toggles;
+    settings.modelSettings = modelSettings;
 
     const filtering = new FilteringSettingsT();
     filtering.type = values.filtering.type;
