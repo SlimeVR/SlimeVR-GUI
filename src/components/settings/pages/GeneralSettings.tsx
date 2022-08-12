@@ -5,6 +5,8 @@ import {
   ChangeSettingsRequestT,
   FilteringSettingsT,
   FilteringType,
+  ModelSettings,
+  ModelToggles,
   RpcMessage,
   SettingsRequestT,
   SettingsResponseT,
@@ -34,6 +36,10 @@ interface SettingsForm {
     intensity: number;
     ticks: number;
   };
+  toggles: {
+    floorClip: boolean;
+    skatingCorrection: boolean;
+  };
   interface: {
     devmode: boolean;
   };
@@ -55,6 +61,10 @@ export function GeneralSettings() {
           knees: false,
           legs: false,
         },
+        toggles: {
+          floorClip: false,
+          skatingCorrection: false,
+        },
         filtering: { intensity: 0, ticks: 0 },
         interface: { devmode: false },
       },
@@ -72,6 +82,12 @@ export function GeneralSettings() {
       trackers.elbows = values.trackers.elbows;
       settings.steamVrTrackers = trackers;
     }
+
+    const toggles = new ModelToggles();
+    toggles.floorClip = values.toggles.floorClip;
+    toggles.skatingCorrection = values.toggles.skatingCorrection;
+
+    settings.modelSettings = toggles;
 
     const filtering = new FilteringSettingsT();
     filtering.type = values.filtering.type;
@@ -226,6 +242,33 @@ export function GeneralSettings() {
               max={50}
               step={1}
             />
+          </div>
+          <div className="flex flex-col pt-2 pb-4">
+            <div className="flex flex-col pt-2 pb-4">
+              <Typography bold>Secondary Filtering</Typography>
+              <Typography color="secondary">
+                Floor clip can Reduces or even eliminates clipping with the but
+                but may cause problems when on your knees. Skating correction
+                corrects for ice skating, but can decrease accuracy in certain
+                movment patterns.
+              </Typography>
+            </div>
+            <div className="grid grid-cols-2 gap-3 pt-3 ">
+              <CheckBox
+                variant="toggle"
+                outlined
+                control={control}
+                name="toggles.floorClip"
+                label="Floor clip"
+              />
+              <CheckBox
+                variant="toggle"
+                outlined
+                control={control}
+                name="toggles.skatingCorrection"
+                label="Skating correction"
+              />
+            </div>
           </div>
         </>
       </SettingsPageLayout>
