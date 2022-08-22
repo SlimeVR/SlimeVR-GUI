@@ -5,9 +5,7 @@ import {
   ChangeSettingsRequestT,
   FilteringSettingsT,
   FilteringType,
-  ModelSettings,
   ModelSettingsT,
-  ModelToggles,
   ModelTogglesT,
   RpcMessage,
   SettingsRequestT,
@@ -39,6 +37,10 @@ interface SettingsForm {
     ticks: number;
   };
   toggles: {
+    extendedSpine: boolean;
+    extendedPelvis: boolean;
+    extendedKnee: boolean;
+    forceArmsFromHmd: boolean;
     floorClip: boolean;
     skatingCorrection: boolean;
   };
@@ -64,7 +66,11 @@ export function GeneralSettings() {
           legs: false,
         },
         toggles: {
-          floorClip: false,
+          extendedSpine: true,
+          extendedPelvis: true,
+          extendedKnee: true,
+          forceArmsFromHmd: false,
+          floorClip: true,
           skatingCorrection: false,
         },
         filtering: { intensity: 0, ticks: 0 },
@@ -89,8 +95,12 @@ export function GeneralSettings() {
     const toggles = new ModelTogglesT();
     toggles.floorClip = values.toggles.floorClip;
     toggles.skatingCorrection = values.toggles.skatingCorrection;
-    modelSettings.toggles = toggles;
+    toggles.extendedKnee = values.toggles.extendedKnee;
+    toggles.extendedPelvis = values.toggles.extendedPelvis;
+    toggles.extendedSpine = values.toggles.extendedSpine;
+    toggles.forceArmsFromHmd = values.toggles.forceArmsFromHmd;
 
+    modelSettings.toggles = toggles;
     settings.modelSettings = modelSettings;
 
     const filtering = new FilteringSettingsT();
@@ -117,6 +127,9 @@ export function GeneralSettings() {
     reset({
       ...(settings.steamVrTrackers
         ? { trackers: settings.steamVrTrackers }
+        : {}),
+      ...(settings.modelSettings.toggles
+        ? { toggles: settings.modelSettings.toggles }
         : {}),
       ...(settings.filtering ? { filtering: settings.filtering } : {}),
       interface: {
