@@ -265,10 +265,10 @@ export function GeneralSettings() {
             <div className="flex flex-col pt-2 pb-4">
               <Typography bold>Secondary Filtering</Typography>
               <Typography color="secondary">
-                Floor clip can Reduces or even eliminates clipping with the but
-                but may cause problems when on your knees. Skating correction
-                corrects for ice skating, but can decrease accuracy in certain
-                movment patterns.
+                Floor-clip can Reduces or even eliminates clipping with the
+                floor but may cause problems when on your knees.
+                Skating-correction corrects for ice skating, but can decrease
+                accuracy in certain movment patterns.
               </Typography>
             </div>
             <div className="grid grid-cols-2 gap-3 pt-3 ">
