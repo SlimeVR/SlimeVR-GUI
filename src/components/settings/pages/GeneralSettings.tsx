@@ -7,6 +7,7 @@ import {
   FilteringType,
   ModelSettingsT,
   ModelTogglesT,
+  ModelRatiosT,
   RpcMessage,
   SettingsRequestT,
   SettingsResponseT,
@@ -37,12 +38,12 @@ interface SettingsForm {
     ticks: number;
   };
   toggles: {
-    extendedSpine: boolean;
-    extendedPelvis: boolean;
-    extendedKnee: boolean;
-    forceArmsFromHmd: boolean;
-    floorClip: boolean;
-    skatingCorrection: boolean;
+    extendedSpine: boolean | null;
+    extendedPelvis: boolean | null;
+    extendedKnee: boolean | null;
+    forceArmsFromHmd: boolean | null;
+    floorClip: boolean | null;
+    skatingCorrection: boolean | null;
   };
   interface: {
     devmode: boolean;
@@ -70,7 +71,7 @@ export function GeneralSettings() {
           extendedPelvis: true,
           extendedKnee: true,
           forceArmsFromHmd: false,
-          floorClip: true,
+          floorClip: false,
           skatingCorrection: false,
         },
         filtering: { intensity: 0, ticks: 0 },
@@ -128,8 +129,8 @@ export function GeneralSettings() {
       ...(settings.steamVrTrackers
         ? { trackers: settings.steamVrTrackers }
         : {}),
-      ...(settings.modelSettings.toggles
-        ? { toggles: settings.modelSettings.toggles }
+      ...(settings.modelSettings?.toggles
+        ? { toggles: settings.modelSettings?.toggles }
         : {}),
       ...(settings.filtering ? { filtering: settings.filtering } : {}),
       interface: {
