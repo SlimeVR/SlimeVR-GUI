@@ -261,35 +261,39 @@ export function GeneralSettings() {
               step={1}
             />
           </div>
+        </>
+      </SettingsPageLayout>
+      <SettingsPageLayout icon={<WrenchIcon></WrenchIcon>} id="fksettings">
+        <>
+          <Typography variant="main-title">FK settings</Typography>
+          <Typography bold>Leg-tweaks</Typography>
           <div className="flex flex-col pt-2 pb-4">
-            <div className="flex flex-col pt-2 pb-4">
-              <Typography bold>Secondary Filtering</Typography>
-              <Typography color="secondary">
-                Floor-clip can Reduces or even eliminates clipping with the
-                floor but may cause problems when on your knees.
-                Skating-correction corrects for ice skating, but can decrease
-                accuracy in certain movment patterns.
-              </Typography>
-            </div>
-            <div className="grid grid-cols-2 gap-3 pt-3 ">
-              <CheckBox
-                variant="toggle"
-                outlined
-                control={control}
-                name="toggles.floorClip"
-                label="Floor clip"
-              />
-              <CheckBox
-                variant="toggle"
-                outlined
-                control={control}
-                name="toggles.skatingCorrection"
-                label="Skating correction"
-              />
-            </div>
+            <Typography color="secondary">
+              Floor-clip can Reduces or even eliminates clipping with the floor
+              but may cause problems when on your knees. Skating-correction
+              corrects for ice skating, but can decrease accuracy in certain
+              movment patterns.
+            </Typography>
+          </div>
+          <div className="grid grid-cols-2 gap-3 pt-3 ">
+            <CheckBox
+              variant="toggle"
+              outlined
+              control={control}
+              name="toggles.floorClip"
+              label="Floor clip"
+            />
+            <CheckBox
+              variant="toggle"
+              outlined
+              control={control}
+              name="toggles.skatingCorrection"
+              label="Skating correction"
+            />
           </div>
         </>
       </SettingsPageLayout>
+
       <SettingsPageLayout icon={<SquaresIcon></SquaresIcon>} id="interface">
         <>
           <Typography variant="main-title">Interface</Typography>
