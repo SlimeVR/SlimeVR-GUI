@@ -113,6 +113,14 @@ export function GeneralSettings() {
     sendRPCPacket(RpcMessage.ChangeSettingsRequest, settings);
 
     setConfig({ debug: values.interface.devmode });
+
+    // if devmode was changed update the page
+    const skeletonSettings = document.getElementById('skeletonSettings');
+    if (skeletonSettings !== null) {
+      skeletonSettings.style.display = values.interface.devmode
+        ? 'block'
+        : 'none';
+    }
   };
 
   useEffect(() => {
@@ -275,7 +283,7 @@ export function GeneralSettings() {
               movment patterns.
             </Typography>
           </div>
-          <div className="grid grid-cols-2 gap-3 pt-3 ">
+          <div className="grid grid-cols-2 gap-3 pb-5">
             <CheckBox
               variant="toggle"
               outlined
@@ -290,6 +298,54 @@ export function GeneralSettings() {
               name="toggles.skatingCorrection"
               label="Skating correction"
             />
+          </div>
+
+          <Typography bold>Arm-FK</Typography>
+          <div className="flex flex-col pt-2 pb-4">
+            <Typography color="secondary">
+              Settings for how the arm kinematics behave.
+            </Typography>
+          </div>
+          <div className="grid grid-cols-1 pb-5">
+            <CheckBox
+              variant="toggle"
+              outlined
+              control={control}
+              name="toggles.forceArmsFromHmd"
+              label="Force arms from HMD"
+            />
+          </div>
+          <div id="skeletonSettings">
+            <Typography bold>Skeleton settings</Typography>
+            <div className="flex flex-col pt-2 pb-4">
+              <Typography color="secondary">
+                More settings that allow further tweaking of the fk settings. It
+                it is recomended to leave these at the default.
+              </Typography>
+            </div>
+            <div className="grid grid-cols-3 gap-3 pb-5">
+              <CheckBox
+                variant="toggle"
+                outlined
+                control={control}
+                name="toggles.extendedSpine"
+                label="Extended Spine"
+              />
+              <CheckBox
+                variant="toggle"
+                outlined
+                control={control}
+                name="toggles.extendedPelvis"
+                label="Extended Pelvis"
+              />
+              <CheckBox
+                variant="toggle"
+                outlined
+                control={control}
+                name="toggles.extendedKnee"
+                label="Extended Knee"
+              />
+            </div>
           </div>
         </>
       </SettingsPageLayout>
