@@ -277,10 +277,10 @@ export function GeneralSettings() {
           <Typography bold>Leg-tweaks</Typography>
           <div className="flex flex-col pt-2 pb-4">
             <Typography color="secondary">
-              Floor-clip can Reduces or even eliminates clipping with the floor
+              Floor-clip can Reduce or even eliminates clipping with the floor
               but may cause problems when on your knees. Skating-correction
               corrects for ice skating, but can decrease accuracy in certain
-              movment patterns.
+              movement patterns.
             </Typography>
           </div>
           <div className="grid grid-cols-2 gap-3 pb-5">
@@ -303,10 +303,10 @@ export function GeneralSettings() {
           <Typography bold>Arm-FK</Typography>
           <div className="flex flex-col pt-2 pb-4">
             <Typography color="secondary">
-              Settings for how the arm kinematics behave.
+              Change the way the arm is tracked.
             </Typography>
           </div>
-          <div className="grid grid-cols-1 pb-5">
+          <div className="grid grid-cols-2 pb-5">
             <CheckBox
               variant="toggle"
               outlined
@@ -319,11 +319,11 @@ export function GeneralSettings() {
             <Typography bold>Skeleton settings</Typography>
             <div className="flex flex-col pt-2 pb-4">
               <Typography color="secondary">
-                More settings that allow further tweaking of the fk settings. It
-                it is recomended to leave these at the default.
+                More settings that allow further tweaking of the FK settings. It
+                is recommended to leave these on.
               </Typography>
             </div>
-            <div className="grid grid-cols-3 gap-3 pb-5">
+            <div className="grid grid-cols-2 gap-3 pb-5">
               <CheckBox
                 variant="toggle"
                 outlined
