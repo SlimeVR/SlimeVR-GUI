@@ -274,7 +274,7 @@ export function GeneralSettings() {
       <SettingsPageLayout icon={<WrenchIcon></WrenchIcon>} id="fksettings">
         <>
           <Typography variant="main-title">FK settings</Typography>
-          <Typography bold>Leg-tweaks</Typography>
+          <Typography bold>Leg tweaks</Typography>
           <div className="flex flex-col pt-2 pb-4">
             <Typography color="secondary">
               Floor-clip can Reduce or even eliminates clipping with the floor
@@ -300,10 +300,10 @@ export function GeneralSettings() {
             />
           </div>
 
-          <Typography bold>Arm-FK</Typography>
+          <Typography bold>Arm FK</Typography>
           <div className="flex flex-col pt-2 pb-4">
             <Typography color="secondary">
-              Change the way the arm is tracked.
+              Change the way the arms are tracked.
             </Typography>
           </div>
           <div className="grid grid-cols-2 pb-5">
@@ -319,8 +319,8 @@ export function GeneralSettings() {
             <Typography bold>Skeleton settings</Typography>
             <div className="flex flex-col pt-2 pb-4">
               <Typography color="secondary">
-                More settings that allow further tweaking of the FK settings. It
-                is recommended to leave these on.
+                Toggle skeleton settings on or off. It is recommended to leave
+                these on.
               </Typography>
             </div>
             <div className="grid grid-cols-2 gap-3 pb-5">
@@ -329,21 +329,21 @@ export function GeneralSettings() {
                 outlined
                 control={control}
                 name="toggles.extendedSpine"
-                label="Extended Spine"
+                label="Extended spine"
               />
               <CheckBox
                 variant="toggle"
                 outlined
                 control={control}
                 name="toggles.extendedPelvis"
-                label="Extended Pelvis"
+                label="Extended pelvis"
               />
               <CheckBox
                 variant="toggle"
                 outlined
                 control={control}
                 name="toggles.extendedKnee"
-                label="Extended Knee"
+                label="Extended knee"
               />
             </div>
           </div>
