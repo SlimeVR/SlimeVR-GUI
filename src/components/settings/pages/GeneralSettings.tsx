@@ -186,7 +186,7 @@ export function GeneralSettings() {
               control={control}
               name="filtering.type"
               label="No filtering"
-              desciption="Use rotations as is, will not do any filtering."
+              desciption="Use rotations as is. Will not do any filtering."
               value={FilteringType.NONE}
             ></Radio>
             <Radio
