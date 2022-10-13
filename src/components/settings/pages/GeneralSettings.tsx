@@ -54,7 +54,7 @@ export function GeneralSettings() {
           knees: false,
           legs: false,
         },
-        filtering: { amount: 0 },
+        filtering: { amount: 10, type: FilteringType.NONE },
         interface: { devmode: false },
       },
     });
