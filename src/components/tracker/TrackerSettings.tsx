@@ -186,7 +186,7 @@ export function TrackerSettingsPage() {
                 udp://
                 {stringifyIp({
                   number: BigInt(
-                    tracker?.device?.hardwareInfo?.hardwareAddress?.ip || 0
+                    tracker?.device?.hardwareInfo?.ipAddress?.addr || 0
                   ),
                   version: 4,
                 })}

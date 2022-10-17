@@ -221,7 +221,7 @@ export function TrackersTable({
             <Typography color="secondary">
               udp://
               {stringifyIp({
-                number: BigInt(device?.hardwareInfo?.hardwareAddress?.ip || 0),
+                number: BigInt(device?.hardwareInfo?.ipAddress?.addr || 0),
                 version: 4,
               })}
             </Typography>
