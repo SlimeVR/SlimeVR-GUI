@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { DefaultValues, useForm, UseFormReset } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import {
   ChangeSettingsRequestT,
@@ -37,12 +37,12 @@ interface SettingsForm {
     amount: number;
   };
   toggles: {
-    extendedSpine: boolean | null;
-    extendedPelvis: boolean | null;
-    extendedKnee: boolean | null;
-    forceArmsFromHmd: boolean | null;
-    floorClip: boolean | null;
-    skatingCorrection: boolean | null;
+    extendedSpine: boolean;
+    extendedPelvis: boolean;
+    extendedKnee: boolean;
+    forceArmsFromHmd: boolean;
+    floorClip: boolean;
+    skatingCorrection: boolean;
   };
   interface: {
     devmode: boolean;
@@ -131,18 +131,35 @@ export function GeneralSettings() {
   }, []);
 
   useRPCPacket(RpcMessage.SettingsResponse, (settings: SettingsResponseT) => {
-    reset({
-      ...(settings.steamVrTrackers
-        ? { trackers: settings.steamVrTrackers }
-        : {}),
-      ...(settings.modelSettings?.toggles
-        ? { toggles: settings.modelSettings?.toggles }
-        : {}),
-      ...(settings.filtering ? { filtering: settings.filtering } : {}),
+    const formData: DefaultValues<SettingsForm> = {
       interface: {
         devmode: config?.debug,
       },
-    });
+    };
+
+    if (settings.filtering) {
+      formData.filtering = settings.filtering;
+    }
+
+    if (settings.steamVrTrackers) {
+      formData.trackers = settings.steamVrTrackers;
+    }
+
+    if (settings.modelSettings?.toggles) {
+      formData.toggles = Object.keys(settings.modelSettings?.toggles).reduce(
+        (curr, key: string) => ({
+          ...curr,
+          [key]:
+            (settings.modelSettings?.toggles &&
+              (settings.modelSettings.toggles as any)[key]) ||
+            false,
+        }),
+        {}
+      );
+      console.log(formData.toggles);
+    }
+
+    reset(formData);
   });
 
   // Handle scrolling to selected page
