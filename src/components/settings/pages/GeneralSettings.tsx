@@ -156,7 +156,6 @@ export function GeneralSettings() {
         }),
         {}
       );
-      console.log(formData.toggles);
     }
 
     reset(formData);
