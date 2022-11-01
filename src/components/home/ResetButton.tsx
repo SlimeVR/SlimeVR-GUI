@@ -10,6 +10,24 @@ export function ResetButton({ type }: { type: ResetType }) {
   const [timer, setTimer] = useState(0);
   const { sendRPCPacket } = useWebsocketAPI();
 
+  const getText = () => {
+    switch (type) {
+      case ResetType.Quick:
+        return 'Quick Reset';
+      case ResetType.Mounting:
+        return 'Reset Mounting';
+    }
+    return 'Reset';
+  };
+
+  const getIcon = () => {
+    switch (type) {
+      case ResetType.Quick:
+        return <QuickResetIcon width={20} />;
+    }
+    return <ResetIcon width={20} />;
+  };
+
   const reset = () => {
     const req = new ResetRequestT();
     req.resetType = type;
@@ -35,20 +53,8 @@ export function ResetButton({ type }: { type: ResetType }) {
 
   return (
     <BigButton
-      text={
-        !reseting
-          ? type === ResetType.Quick
-            ? 'Quick Reset'
-            : 'Reset'
-          : `${3 - timer}`
-      }
-      icon={
-        type === ResetType.Quick ? (
-          <QuickResetIcon width={20} />
-        ) : (
-          <ResetIcon width={20} />
-        )
-      }
+      text={!reseting ? getText() : `${3 - timer}`}
+      icon={getIcon()}
       onClick={reset}
       disabled={reseting}
     ></BigButton>
