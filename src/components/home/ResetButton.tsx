@@ -61,7 +61,7 @@ export function ResetButton({ type }: { type: ResetType }) {
 
   return (
     <BigButton
-      text={!reseting ? getText() : `${3 - timer}`}
+      text={!reseting || timer >= 3 ? getText() : `${3 - timer}`}
       icon={getIcon()}
       onClick={reset}
       disabled={reseting}
