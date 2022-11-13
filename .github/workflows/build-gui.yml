@@ -32,12 +32,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Build
         run: |
-          npm ci
-          npm run tauri build
+          yarn install --frozen-lockfile
+          yarn run build
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0

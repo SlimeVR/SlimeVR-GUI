@@ -3,13 +3,13 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "cd gui && cross-env BROWSER=none node scripts/start.js",
-    "gui": "cd gui && npm run tauri dev",
-    "tauri": "cd gui && npm run tauri",
-    "preinstall": "cd gui && npm install",
+    "gui": "cd gui && yarn run tauri dev",
+    "build": "cd gui && yarn run tauri build",
+    "tauri": "cd gui && yarn run tauri",
+    "preinstall": "cd gui && yarn install",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "husky": "^8.0.2"
+    "husky": "8.0.2"
   }
 }

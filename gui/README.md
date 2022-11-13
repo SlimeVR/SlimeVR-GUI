@@ -12,21 +12,23 @@ This project is written in Typescript + React for the frontend and uses Tauri + 
 - Windows Webview
 - SlimeVR server installed
 - [Rust](https://rustup.rs)
+- [yarn v1](https://yarnpkg.com)
 
 ```
-npm install
+npm i -g yarn
+yarn install
 ```
 
 Build for production
 
 ```
-npm run tauri build
+yarn tauri build
 ```
 
 Launch in dev mode
 
 ```
-npm run tauri dev
+yarn tauri dev
 ```
 
 ## Contributing
