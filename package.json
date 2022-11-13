@@ -6,7 +6,7 @@
     "gui": "cd gui && yarn run tauri dev",
     "build": "cd gui && yarn run tauri build",
     "tauri": "cd gui && yarn run tauri",
-    "preinstall": "cd gui && yarn install --frozen-lockfile",
+    "preinstall": "cd gui && yarn install",
     "prepare": "husky install"
   },
   "devDependencies": {

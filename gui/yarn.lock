@@ -4806,10 +4806,10 @@ flat-cache@^3.0.4:
     flatted "^3.1.0"
     rimraf "^3.0.2"
 
-flatbuffers@^2.0.6:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/flatbuffers/-/flatbuffers-2.0.7.tgz#3e8e2c46930820747578158cdf11c8b80f8abf89"
-  integrity sha512-5JulPk3a7zTdb2p2ElkAT8hmw4udmSL8GoRKkDa/y9+qFwKbFrRgAbF4VgSt2oIGTEpBqz9CmsvwCstwJ5D9kg==
+flatbuffers@22.10.26:
+  version "22.10.26"
+  resolved "https://registry.yarnpkg.com/flatbuffers/-/flatbuffers-22.10.26.tgz#1b92e9559f5253ca7dc54e2b0eb63d2bcdbe329b"
+  integrity sha512-sdO3emf/BlLfOogW6KwHuXg16APR/E86jNacDXfSInPzt8SSEzxlHcqDekfM/IJ1CGC5bvDksfNufNhS8h1FRA==
 
 flatted@^3.1.0:
   version "3.2.7"
@@ -8533,11 +8533,11 @@ sockjs@^0.3.24:
     uuid "^8.3.2"
     websocket-driver "^0.7.4"
 
-"solarxr-protocol@git+https://github.com/SlimeVR/SolarXR-Protocol":
+"solarxr-protocol@git+https://github.com/SlimeVR/SolarXR-Protocol#auto_generated":
   version "1.0.0"
-  resolved "git+https://github.com/SlimeVR/SolarXR-Protocol#86eb9aa6b5126d363570250831663a7ba9920c23"
+  resolved "git+https://github.com/SlimeVR/SolarXR-Protocol#c98da79c2ad50d57ff1cedc2dc5b3e08522ad42d"
   dependencies:
-    flatbuffers "^2.0.6"
+    flatbuffers "22.10.26"
 
 source-list-map@^2.0.0, source-list-map@^2.0.1:
   version "2.0.1"
