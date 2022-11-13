@@ -3,8 +3,8 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "cd gui && cross-env BROWSER=none node scripts/start.js",
     "gui": "cd gui && yarn run tauri dev",
+    "build": "cd gui && yarn run tauri build",
     "tauri": "cd gui && yarn run tauri",
     "preinstall": "cd gui && yarn install --frozen-lockfile",
     "prepare": "husky install"
