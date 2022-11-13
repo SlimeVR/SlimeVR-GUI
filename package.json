@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "cd gui && cross-env BROWSER=none node scripts/start.js",
-    "gui": "cd gui && yarn tauri dev",
-    "tauri": "cd gui && yarn tauri",
+    "gui": "cd gui && yarn run tauri dev",
+    "tauri": "cd gui && yarn run tauri",
     "preinstall": "cd gui && yarn install --frozen-lockfile",
     "prepare": "husky install"
   },
